@@ -1,6 +1,48 @@
 
 
-/*
+const getDolares = async () => {
+  try {
+     const response = await fetch("https://dolarapi.com/v1/dolares")
+     const data = await response.json()
+     const cotizaciones =
+      data.map( rucula => ({
+        nombre: rucula.nombre,
+        venta: rucula.venta,
+        compra: rucula.compra
+      })) 
+     console.log("cotizacion de la rucula ", data)
+       return cotizaciones;
+  } catch (error) {
+    console.error('Error al obtener el Dólar Oficial:', error);
+  }
+ }
+
+ getDolares()
+
+
+
+
+
+
+
+
+/* 
+const dolarOfi = async () => {
+   try {
+     const response = await fetch("https://dolarapi.com/v1/dolares/oficial");
+    const data = await response.json()
+    const infoDolar = {
+    compra: data.compra,
+    venta: data.venta}
+    console.log(`Compra: $${infoDolar.compra}`);
+    console.log(`Venta: $${infoDolar.venta}`);
+    } catch (error) {
+      console.error('Error al obtener el Dólar Oficial:', error);
+    }
+    }
+    dolarOfi();
+
+
 
 fetch("https://dolarapi.com/v1/dolares")
   .then(response => response.json())
@@ -13,7 +55,7 @@ fetch("https://dolarapi.com/v1/dolares")
 
 
 
- */
+
 
 fetch("https://dolarapi.com/v1/cotizaciones")
   .then(response => response.json())
@@ -28,4 +70,4 @@ fetch("https://dolarapi.com/v1/cotizaciones")
     x.querySelector(".precio-compra").innerHTML= compra
     document.body.appendChild(x)
   }
-
+*/
