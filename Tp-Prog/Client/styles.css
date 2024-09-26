@@ -14,6 +14,7 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: -1;
 }
 
 .titulo {
@@ -34,7 +35,7 @@ footer ul li {
     display: flex;
     justify-content: center;
     margin-block: 20px;
-    gap: 20px;
+    gap: 20px
 }
 
 .titulo {
@@ -48,6 +49,8 @@ nav{
 .header a{
     color: #fff;
     font-size: 1.1em;
+    display: flex;
+    justify-content: space-around;
 }
 nav ul{
     list-style-type: none;
@@ -55,7 +58,7 @@ nav ul{
     text-align: left;
     display: flex;
 }
-.compra{
+/* .compra{
     text-align: left;
     padding: 5px;
     float: left;
@@ -89,10 +92,49 @@ nav ul{
 
 .dolar{
     border-bottom: solid 1px black;
-}
+} */
 
 img {
     align-items: right;
+    flex-direction: end;
+}
+
+
+.dolar-oficial {
+    margin-left: 50px;
+    max-width: 30%;
+    padding: 20px;
+    border: solid 2px black;
+    border-radius: 20px;
+    background-color: #F7EDE2;
+    display: inline-grid;
+    flex-wrap: wrap;
+    line-height: 1em;
+    width: 200px;
+}
+
+.dolar {
+    border-bottom: solid 1px black;
+    padding-bottom: 10px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.compra-venta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.compra, .venta {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.precio-compra, .precio-venta {
+    
+    padding-top: 5px;
 }
 
 @media screen and (max-width: 600px) {
@@ -105,3 +147,4 @@ img {
         align-items: center;
     }
 }
+

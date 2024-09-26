@@ -1,12 +1,24 @@
-fetch("https://dolarapi.com/v1/dolares")
-  .then(response => response.json())
-  .then(data => {console.log(data[5].venta); console.log (data[4].venta)});/*document.write(data[5].venta); document.write(data[4].venta)});*/
 
 
-  const dolarBlue = () => {
-    fetch("https://dolarapi.com/v1/dolares/blue")
-  .then(response => response.json())
-  .then(data => console.log(data));
-  };
+const getDolares = async () => {
+  try {
+     const response = await fetch("https://dolarapi.com/v1/dolares")
+     const data = await response.json()
+     const cotizaciones =
+      data.map( rucula => ({
+        nombre: rucula.nombre,
+        venta: rucula.venta,
+        compra: rucula.compra
+      })) 
+     console.log("cotizacion de la rucula ", data)
+       return cotizaciones;
+  } catch (error) {
+    console.error('Error al obtener el Dólar Oficial:', error);
+  }
+ }
 
-  dolarBlue();
+ getDolares()
+
+
+
+
