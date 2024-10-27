@@ -1,17 +1,9 @@
-/* Contenedor principal que cubre toda la altura de la pantalla */
 body {
     background-color: #a5a3a3;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* El contenido principal de la página, que se expandirá si es necesario */
-main {
-    flex: 1;
+    height: 100vh;
 }
 
 footer {
@@ -19,7 +11,10 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px;
+    position: fixed;
+    bottom: 0;
     width: 100%;
+    z-index: -1;
 }
 
 .titulo {
@@ -40,7 +35,7 @@ footer ul li {
     display: flex;
     justify-content: center;
     margin-block: 20px;
-    gap: 20px;
+    gap: 20px
 }
 
 .titulo {
@@ -48,31 +43,65 @@ footer ul li {
     color: #949393;
 }
 
-nav {
-    background-color: #333;
+nav{
+    background-color: #333
 }
-
-.header a {
+.header a{
     color: #fff;
     font-size: 1.1em;
     display: flex;
     justify-content: space-around;
 }
-
-nav ul {
+nav ul{
     list-style-type: none;
     padding: 5px;
     text-align: left;
     display: flex;
 }
+/* .compra{
+    text-align: left;
+    padding: 5px;
+    float: left;
+}
+.venta{
+    text-align: right;
+    padding: 5px;
+    float: right;
+    
+    
+}
+.precio-compra{
+    text-align: left;
+    padding: 5px;
+    flex-direction: column;
+}
+.precio-venta{
+    text-align: right;
+    padding: 5px;
+    
+}
+.dolar-oficial{
+    margin-left: 50px;
+    max-width: 30%;
+    padding: 20px;
+    border: solid 2px black;
+    list-style-type: none;
+    border-radius: 20px;
+    background-color: beige;
+}
+
+.dolar{
+    border-bottom: solid 1px black;
+} */
 
 img {
     align-items: right;
     flex-direction: end;
 }
 
+
 .dolar-oficial {
-    margin: 50px;
+    margin-left: 50px;
     max-width: 30%;
     padding: 20px;
     border: solid 2px black;
@@ -97,15 +126,14 @@ img {
     padding-top: 10px;
 }
 
-.compra,
-.venta {
+.compra, .venta {
     display: flex;
     flex-direction: column;
     font-weight: bold;
 }
 
-.precio-compra,
-.precio-venta {
+.precio-compra, .precio-venta {
+    
     padding-top: 5px;
 }
 
@@ -119,3 +147,4 @@ img {
         align-items: center;
     }
 }
+
