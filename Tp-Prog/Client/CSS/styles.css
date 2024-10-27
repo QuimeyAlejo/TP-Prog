@@ -72,13 +72,13 @@ img {
     flex-direction: end;
 }
 .carta-container{
-    display: flex;
+    display: absolute;
     margin: 50px;
 }
 .dolar-oficial {
     margin: 25px;
     max-width: 30%;
-    padding: 20px;
+    padding: 25px;
     border: solid 2px black;
     border-radius: 20px;
     background-color: #F7EDE2;
