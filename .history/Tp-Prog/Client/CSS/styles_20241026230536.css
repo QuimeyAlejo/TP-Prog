@@ -110,8 +110,7 @@ img {
 }
 
 .li-text{
-    text-decoration : none;
-    color: inherit;
+    text-decoration : none
 }
 @media screen and (max-width: 600px) {
     .info {
