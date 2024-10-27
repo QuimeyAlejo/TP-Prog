@@ -72,7 +72,7 @@ img {
     flex-direction: end;
 }
 .carta-container{
-    display: fixed;
+    display: flex;
     margin: 50px;
 }
 .dolar-oficial {
