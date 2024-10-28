@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Crear la sección de derechos de autor
     const copyrightDiv = document.createElement('div');
     copyrightDiv.className = 'tradingview-widget-copyright';
-    copyrightDiv.innerHTML = '<a href="https://es.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Siga los mercados en TradingView</span></a>';
+   
     widgetContainer.appendChild(copyrightDiv);
 
     // Agregar el contenedor del widget a un lugar específico
@@ -29,15 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configuración del widget
     const config = {
         "symbols": [
-            { "description": "USDT A ARS", "proName": "BINANCE:USDTARS" },
-            { "description": "USDT A BTC", "proName": "MEXC:BTCUSDT" },
-            { "description": "BTC A USD", "proName": "COINBASE:BTCUSD" }
+            { description: "btc-usd", proName: "BITSTAMP:BTCUSD" },
+            { description: "eth-usd", proName: "COINBASE:ETHUSD" },
+            { description: "sol-usd", proName: "BINANCE:SOLUSD" },
+            { description: "usdt", proName: "CRYPTOCAP:USDT" },
+            { description: "SP500", proName: "FRED:SP500" },
+            { description: "YPF", proName: "BCBA:YPFD" }
+            
         ],
         "showSymbolLogo": true,
         "isTransparent": false,
         "displayMode": "adaptive",
-        "colorTheme": "light",
-        "locale": "es"
+        "colorTheme": "dark",
+        "locale": "en"
     };
 
     // Asignar la configuración del widget como atributo de datos
