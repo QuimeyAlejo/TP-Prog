@@ -1,30 +1,27 @@
 const crearCartaCotizacion = (cotizacion) => {
-  
   const carta = document.createElement('div');
-  carta.classList.add('dolar-oficial'); // Usa la misma clase que tenías
+  carta.classList.add('dolar-oficial');
 
-  
-  carta.innerHTML = `
-          <div class="dolar">${cotizacion.nombre} ${cotizacion.tipoDeCambio}</div>
-        <div class="compra-venta">
-            <div class="compra">
-                <span>Compra</span>
-                <span class="precio-compra">$${parseFloat(cotizacion.compra).toFixed(2)}</span>
-            </div>
-            <div class="venta">
-                <span>Venta</span>
-                <span class="precio-venta">$${parseFloat(cotizacion.venta).toFixed(2)}</span>
-            </div>
+  carta.innerHTML = `  
+    <div class="dolar">${cotizacion.nombre} ${cotizacion.tipoDeCambio}</div>
+    <div class="compra-venta">
+        <div class="compra">
+            <span>Compra</span>
+            <span class="precio-compra">$${parseFloat(cotizacion.compra).toFixed(2)}</span>
         </div>
+        <div class="venta">
+            <span>Venta</span>
+            <span class="precio-venta">$${parseFloat(cotizacion.venta).toFixed(2)}</span>
+        </div>
+    </div>
   `;
+  // que complicado es hacer un backstick 
 
   return carta; 
 };
 
 const actualizarCotizaciones = (cotizaciones) => {
-  const container = document.querySelector('.carta-container'); // Selecciona el contenedor
-
-  
+  const container = document.querySelector('.carta-container');
   container.innerHTML = '';
 
   cotizaciones.forEach(cotizacion => {
@@ -33,7 +30,20 @@ const actualizarCotizaciones = (cotizaciones) => {
   });
 };
 
+const mostrarGifCarga = () => {
+  document.getElementById('gifCarga').style.display = 'block';
+};
+
+const ocultarGifCarga = () => {
+  document.getElementById('gifCarga').style.display = 'none';
+};
+
 const getCotizaciones = async () => {
+  mostrarGifCarga();
+  const timer = setTimeout(() => {
+    ocultarGifCarga();
+  }, 5000000);
+
   try {
       const response = await fetch("https://dolarapi.com/v1/cotizaciones");
       const data2 = await response.json();
@@ -48,9 +58,10 @@ const getCotizaciones = async () => {
       actualizarCotizaciones(cotizaciones); 
   } catch (error) {
       console.log("Error al obtener los datos de la cotizacion Euro", error);
+  } finally {
+      clearTimeout(timer);
+      ocultarGifCarga();
   }
 };
 
-
-getCotizaciones();
-
+window.onload = getCotizaciones;
