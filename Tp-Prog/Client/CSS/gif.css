@@ -1,0 +1,6 @@
+#gifCarga {
+    display: none; /* Oculto por defecto */
+    width: 100px; /* Ajusta el tamaño según sea necesario */
+    margin: 20px auto; /* Centrar el GIF */
+    display: block; /* Muestra como un bloque */
+}
