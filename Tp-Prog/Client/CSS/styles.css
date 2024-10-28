@@ -51,7 +51,7 @@ footer ul li {
 nav {
     background-color: #0c1c32;
     padding: 10px;
-    
+    justify-content: flex-start;
 }
 
 .header a {
@@ -116,20 +116,58 @@ nav ul {
 .precio-venta {
     padding-top: 5px;
 }
-button{
-    display: inline-block;
-    font-size: 1.25em;
-    padding: 10px;
-    border-radius: 1em;
-    background-color: #2a3a50;
-    color: white;
-    border-color: white;
-    box-shadow:0px 3px 0px #373c3c;
-    width:150px;
-    text-decoration:none;
+.contenedor {
+    width: 100%;
+    margin: auto;
+    padding: 25px 0;
+    display: flex;
+    justify-content: flex-start;
 }
-button:hover{
-    background-color: #39495f;
+
+.contenedor-botones {
+    width: auto; 
+    display: grid;
+    grid-template-columns: repeat(3, auto); 
+    gap: 10px;
+}
+
+button {
+    height: 50px;
+    background: #141414;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: .3s ease all;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    width: 150px; 
+}
+
+button span {
+    position: relative;
+    z-index: 2;
+    transition: .3s ease all;
+}
+
+.boton::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: calc(-100% - 80px);
+    border-bottom: 80px solid #286cff;
+    border-right: 80px solid transparent;
+    transition: .4s ease-in-out all;
+}
+
+.boton:hover::after {
+    left: 0;
 }
 .li-text{
     text-decoration : none;
