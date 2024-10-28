@@ -1,49 +1,67 @@
-const actualizarCotizacion = (cotizaciones) => {
-  const compraElement = document.querySelector('.precio-compra'); // Agrega el punto antes de la clase
-  const ventaElement = document.querySelector('.precio-venta'); // Agrega el punto antes de la clase
+const crearCartaCotizacion = (cotizacion) => {
+  const carta = document.createElement('div');
+  carta.classList.add('dolar-oficial');
 
-  if (cotizaciones.length > 0) {
-      compraElement.textContent = `$${cotizaciones[0].compra}`;
-      ventaElement.textContent = `$${cotizaciones[0].venta}`;
-  } else {
-      console.error('No hay cotizaciones disponibles');
-  }
+  carta.innerHTML = `  
+    <div class="dolar">${cotizacion.nombre} ${cotizacion.tipoDeCambio}</div>
+    <div class="compra-venta">
+        <div class="compra">
+            <span>Compra</span>
+            <span class="precio-compra">$${parseFloat(cotizacion.compra).toFixed(2)}</span>
+        </div>
+        <div class="venta">
+            <span>Venta</span>
+            <span class="precio-venta">$${parseFloat(cotizacion.venta).toFixed(2)}</span>
+        </div>
+    </div>
+  `;
+  // que complicado es hacer un backstick 
+
+  return carta; 
 };
 
-const getDolares = async () => {
-  try {
-     const response = await fetch("https://dolarapi.com/v1/dolares");
-     const data = await response.json();
-     const cotizaciones = data.map(rucula => ({
-        nombre: rucula.nombre,
-        venta: rucula.venta,
-        compra: rucula.compra
-     }));
+const actualizarCotizaciones = (cotizaciones) => {
+  const container = document.querySelector('.carta-container');
+  container.innerHTML = '';
 
-     console.log("cotizacion de la rucula ", cotizaciones); // Muestra las cotizaciones
-     actualizarCotizacion(cotizaciones); // Actualiza el HTML con las cotizaciones
-  } catch (error) {
-    console.error('Error al obtener el Dólar Oficial:', error);
-  }
+  cotizaciones.forEach(cotizacion => {
+      const carta = crearCartaCotizacion(cotizacion); 
+      container.appendChild(carta); 
+  });
 };
 
-getDolares();
+const mostrarGifCarga = () => {
+  document.getElementById('gifCarga').style.display = 'block';
+};
+
+const ocultarGifCarga = () => {
+  document.getElementById('gifCarga').style.display = 'none';
+};
 
 const getCotizaciones = async () => {
-  try {
-    const response = await fetch("https://dolarapi.com/v1/cotizaciones");
-    const data2 = await response.json();
-    const cotizaciones = data2.map(moneda => ({
-      nombre: moneda.nombre,
-      venta: moneda.venta,
-      compra: moneda.compra
-    }));
+  mostrarGifCarga();
+  const timer = setTimeout(() => {
+    ocultarGifCarga();
+  }, 5000000);
 
-    console.log("cotizacion de la moneda ", cotizaciones); // Muestra las cotizaciones
-    return cotizaciones;
+  try {
+      const response = await fetch("https://dolarapi.com/v1/cotizaciones");
+      const data2 = await response.json();
+      const cotizaciones = data2.map(moneda => ({
+          nombre: moneda.nombre,
+          tipoDeCambio: moneda.casa,
+          venta: moneda.venta,
+          compra: moneda.compra
+      }));
+
+      console.log("cotizacion de la moneda ", cotizaciones);
+      actualizarCotizaciones(cotizaciones); 
   } catch (error) {
-    console.log("Error al obtener los datos de la cotizacion Euro", error);
+      console.log("Error al obtener los datos de la cotizacion Euro", error);
+  } finally {
+      clearTimeout(timer);
+      ocultarGifCarga();
   }
 };
 
-getCotizaciones();
+window.onload = getCotizaciones();
