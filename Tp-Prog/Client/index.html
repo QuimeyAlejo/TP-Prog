@@ -15,12 +15,14 @@
         <button onclick="window.location.href='dolar.html'">Dólar</button> 
        <button >Historico</button>
     </nav>
-    
-    <main>
-        <h1>Cambio de moneda ARS a otro tipo de cambio</h1>
-        <img id="gifCarga" src="./Img/cargando.webp" alt="Cargando...">
-        <div class="carta-container"></div>
+    <div id="tradingview-widget-container" class="widget-trading"></div>
+  </div>
+  <main>
+      <h1>Cambio de moneda ARS a otro tipo de cambio</h1>
+      <img id="gifCarga" src="./Img/cargando.webp" alt="Cargando...">
+      <div class="carta-container"></div>
     </main>
+
     <div>
         
         <footer>
@@ -55,8 +57,6 @@
 
 
 <script src="./Script/integrador.js" defer></script>
-<!-- <script src="./Script/peticionDolar.js" defer></script> -->
-<!-- <script src="../Server/server.py"></script>  -->
-
+<script src="./Script/tradingview.js" defer></script>
 
 </html>
