@@ -1,4 +1,4 @@
-/* Contenedor principal que cubre toda la altura de la pantalla */
+
 body {
     background-color: #FBF6F0;
     font-family: Arial, Helvetica, sans-serif;
@@ -9,7 +9,7 @@ body {
     flex-direction: column;
 }
 
-/* El contenido principal de la página, que se expandirá si es necesario */
+
 main {
     flex: 1;
 }
@@ -75,13 +75,14 @@ nav ul {
 .carta-container{
     display: absolute;
     margin: 50px;
+    padding: 20px;
 }
 .widget-trading {
    
 }
 .dolar-oficial {
     margin: 25px;
-    max-width: 30%;
+    max-width: 50%;
     padding: 25px;
     border: solid 2px black;
     border-radius: 20px;
@@ -89,7 +90,8 @@ nav ul {
     display: inline-grid;
     flex-wrap: wrap;
     line-height: 1em;
-    width: 201px;
+    width: 290px;
+
 }
 
 .dolar {
@@ -110,6 +112,7 @@ nav ul {
     display: flex;
     flex-direction: column;
     font-weight: bold;
+    padding: 10px;
 }
 
 .precio-compra,
