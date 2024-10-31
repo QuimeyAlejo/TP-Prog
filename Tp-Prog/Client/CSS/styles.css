@@ -82,12 +82,16 @@ nav ul {
 
 h1{
     text-align: center;
+    color: #fff;
 }
 
 .carta-container{
-    display:absolut;
-    margin: 50px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Crea 3 columnas de igual ancho */
+  gap: 2rem; /* Espacio entre los elementos */
+  padding: 4rem;
+  align-items: center;
+  justify-items: center;
 }
 
 .dolar-oficial {
