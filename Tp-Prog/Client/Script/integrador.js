@@ -1,4 +1,5 @@
 const crearCartaCotizacion = (cotizacion) => {
+  
   const carta = document.createElement('div');
   carta.classList.add('dolar-oficial');
 

@@ -1,6 +1,10 @@
 
 body {
-    background-color: #FBF6F0;
+    background:url("../Img/dolar-guru-inversion-abrilpng.webp");
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
@@ -39,6 +43,7 @@ footer ul li {
 .info {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-block: 20px;
     gap: 20px;
 }
@@ -71,15 +76,20 @@ nav ul {
 .logoutn {
     align-items: right;
     flex-direction: end;
+    width: 6em;
+    height: auto;
 }
+
+h1{
+    text-align: center;
+}
+
 .carta-container{
-    display: absolute;
+    display:absolut;
     margin: 50px;
     padding: 20px;
 }
-.widget-trading {
-   
-}
+
 .dolar-oficial {
     margin: 25px;
     max-width: 50%;
