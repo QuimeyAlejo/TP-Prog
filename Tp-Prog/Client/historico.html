@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historico</title>
+    <link rel="stylesheet" href="./CSS/styles.css">
+</head>
+<body>
+
+<section>
+    <h1>Historico</h2>
+</section>
+
+<div>
+    <form class="formularioHistorico" action="#">
+        <label for="casaElegida">¿Qué historial deseas cosultar??</label>
+        <div>
+            <select name="casaElegida" id="casaElegida">     
+                <option value="" disabled selected>Selecioná una moneda</option>   
+                <option value="oficial">Oficial</option>
+                <option value="blue">Blue</option>
+                <option value="bolsa">Bolsa</option>
+                <option value="contadoconliqui">CCL</option>
+                <option value="cripto">Cripto</option>
+                <option value="mayorista">Mayorista</option>
+                <option value="solidario">Solidario</option>
+                <option value="turista">Turista</option>
+            </select>
+        </div>
+        <div>
+            <input type="date" name="fechaElegida" id="fechaElegida" min="2011-01-03" max="">
+        </div>
+            <input type="button" id="buscarButton" value="Enviar" onclick="obtenerDatos()">       
+    </form>
+    <div id="resultado"></div>
+
+</div>
+
+</body>
+
+<script src="./Script/historicoPrecios.js" defer></script>
+</html>
