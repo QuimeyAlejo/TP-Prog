@@ -1,4 +1,3 @@
-
 body {
     background:url("../Img/fondodolar.webp");
     
@@ -13,10 +12,10 @@ body {
     flex-direction: column;
 }
 
-
+/* 
 main {
     flex: 1;
-}
+} */
 
 footer {
     background-color: #0c1c32;
@@ -89,11 +88,12 @@ h1{
 
 .carta-container{
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Crea 3 columnas de igual ancho */
-  gap: 2rem; /* Espacio entre los elementos */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; 
   padding: 4rem;
   align-items: center;
   justify-items: center;
+  text-align: center;
 }
 
 .dolar-oficial {
@@ -201,12 +201,6 @@ button span {
         flex-direction: column;
         align-items: center;
     }
-}
-
-#historialChart {
-    max-width: 100%;
-    height: 400px;  /* O ajusta la altura según sea necesario */
-    margin: 0 auto; /* Centra el canvas */
 }
 
 .formularioHistorico{

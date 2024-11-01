@@ -1,8 +1,8 @@
 function obtenerDatos() {
-  let casaElegida = document.querySelector('#casaElegida').value; // Suponiendo que hay un select con casas
-  let fechaElegida = document.querySelector('#fechaElegida').value; // Suponiendo que hay un input para la fecha
+  let casaElegida = document.querySelector('#casaElegida').value; 
+  let fechaElegida = document.querySelector('#fechaElegida').value; 
 
-  fetch('https://api.argentinadatos.com/v1/cotizaciones/dolares/') // Reemplaza con tu URL real
+  fetch('https://api.argentinadatos.com/v1/cotizaciones/dolares/')
       .then(response => response.json())
       .then(data => {
           // Filtra los datos para encontrar el objeto que coincida con la casa y la fecha elegidas
@@ -16,7 +16,6 @@ function obtenerDatos() {
       })
       .catch(error => console.error('Error en la solicitud:', error));
 }
-
 function mostrarResultado(casa, fecha, compra, venta) {
   const resultadoDiv = document.getElementById('resultado');
 
@@ -28,5 +27,5 @@ function mostrarResultado(casa, fecha, compra, venta) {
   `;
 }
 
-// Llama a la función al hacer clic en un botón, por ejemplo
+// Llama a la función al hacer clic en un botón
 document.getElementById('buscarButton').addEventListener('click', obtenerDatos);
