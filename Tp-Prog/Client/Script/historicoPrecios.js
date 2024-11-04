@@ -1,8 +1,11 @@
 function obtenerDatos() {
   let casaElegida = document.querySelector('#casaElegida').value; 
   let fechaElegida = document.querySelector('#fechaElegida').value; 
-
-  fetch('https://api.argentinadatos.com/v1/cotizaciones/dolares/')
+  
+const fecha = fechaElegida.replace(/-/g, "/");
+  
+  try{
+  fetch(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${casaElegida}/${fechaElegida}')
       .then(response => response.json())
       .then(data => {
           // Filtra los datos para encontrar el objeto que coincida con la casa y la fecha elegidas
