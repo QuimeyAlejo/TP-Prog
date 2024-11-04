@@ -1,3 +1,8 @@
+* {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 body {
     background:url("../Img/fondodolar.webp");
     background-size: cover;
@@ -103,7 +108,7 @@ h1{
 .carta-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 10px;
   padding: 4rem;
   justify-items: center;
 }
