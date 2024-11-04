@@ -6,7 +6,7 @@ const fecha = fechaElegida.replace(/-/g, "/");
   
 //borre el try
 
-  fetch(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${casaElegida}/${fechaElegida}')
+  fetch('https://api.argentinadatos.com/v1/cotizaciones/dolares/${casaElegida}/${fechaElegida}')
       .then(response => response.json())
       .then(data => {
           // Filtra los datos para encontrar el objeto que coincida con la casa y la fecha elegidas
