@@ -12,10 +12,10 @@ body {
     flex-direction: column;
 }
 
-/* 
+
 main {
     flex: 1;
-} */
+} 
 
 footer {
     background-color: #0c1c32;
@@ -53,11 +53,19 @@ footer ul li {
     font-size: 0.9em;
     color: #949393;
 }
-
+.widget-trading{
+    text-align: center;
+    width: 101.5%;
+    display: flex; flex-direction: column; margin-top: auto;
+}
 nav {
     background-color: #0c1c32;
-    padding: 10px;
-    justify-content: flex-start;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    display: flex; flex-direction: column; margin-top: auto;
+    height: auto;
 }
 
 .header a {
@@ -146,7 +154,7 @@ h1{
 .contenedor-botones {
     width: auto; 
     display: grid;
-    grid-template-columns: repeat(3, auto); 
+    grid-template-columns: repeat(4, auto); 
     gap: 10px;
 }
 
@@ -228,4 +236,42 @@ button span {
     margin: 0 auto;
     font-size: 2em; 
     font-weight: bold;
+}
+
+
+form{
+    background-color:   #f3f3f3;
+    max-width: 50%;
+    height: auto;
+    margin: auto;
+    padding: 20px;
+}
+label{
+    margin: 10px;
+}
+
+input{
+    display: block;
+    width: 500px;
+    height: 30px;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+textarea{
+    display: block;
+    width: 500px;
+    height: 100px;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 3px
+}
+
+.enviar{
+    background-color: #313553;
+    color: white;
+    margin: auto;
+    border-radius: 3px;
+    border-style: none;    
+    width: 515px;
 }
