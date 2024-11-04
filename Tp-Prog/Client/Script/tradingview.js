@@ -31,10 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
         "symbols": [
             { description: "btc-usd", proName: "BITSTAMP:BTCUSD" },
             { description: "eth-usd", proName: "COINBASE:ETHUSD" },
-            { description: "sol-usd", proName: "BINANCE:SOLUSD" },
+            { description: "YPF", proName: "BCBA:YPFD" },
             { description: "usdt", proName: "CRYPTOCAP:USDT" },
-            { description: "SP500", proName: "FRED:SP500" },
-            { description: "YPF", proName: "BCBA:YPFD" }
+            { description: "S&P 500", proName: "FOREXCOM:SPXUSD" },
+            { description: "MELI", proName: "BCBA:MELI" },
+            { description: "galicia", proName: "BCBA:GGAL" }
             
         ],
         "showSymbolLogo": true,
