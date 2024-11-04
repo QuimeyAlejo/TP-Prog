@@ -4,7 +4,8 @@ function obtenerDatos() {
   
 const fecha = fechaElegida.replace(/-/g, "/");
   
-  try{
+//borre el try
+
   fetch(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${casaElegida}/${fechaElegida}')
       .then(response => response.json())
       .then(data => {
