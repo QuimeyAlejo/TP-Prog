@@ -1,6 +1,5 @@
 body {
     background:url("../Img/fondodolar.webp");
-    
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -64,7 +63,9 @@ nav {
     text-align: center;
     padding: 15px;
     width: 100%;
-    display: flex; flex-direction: column; margin-top: auto;
+    display: flex; 
+    flex-direction: column; 
+    margin-top: auto;
     height: auto;
 }
 
@@ -73,13 +74,6 @@ nav {
     font-size: 1.1em;
     display: flex;
     justify-content: space-around;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 5px;
-    text-align: left;
-    display: flex;
 }
 
 .logoutn {
@@ -94,29 +88,26 @@ h1{
     color: #fff;
 }
 
-.carta-container{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem; 
-  padding: 4rem;
-  align-items: center;
-  justify-items: center;
-  text-align: center;
-}
-
 .dolar-oficial {
     margin: 25px;
-    max-width: 50%;
+    max-width: 100%;
     padding: 25px;
     border: solid 2px black;
     border-radius: 20px;
     background-color: #F7EDE2;
     display: inline-grid;
-    flex-wrap: wrap;
     line-height: 1em;
     width: 290px;
-
 }
+
+.carta-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 4rem;
+  justify-items: center;
+}
+
 
 .dolar {
     border-bottom: solid 1px black;
@@ -200,16 +191,6 @@ button span {
     text-decoration : none;
     color: inherit;
 }
-@media screen and (max-width: 600px) {
-    .info {
-        flex-direction: column;
-    }
-    footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
 
 .formularioHistorico{
     background-color: #fff;
@@ -275,3 +256,62 @@ textarea{
     border-style: none;    
     width: 515px;
 }
+
+
+@media screen and (max-width: 680px) {
+    .info {
+        flex-direction: column;
+    }
+    footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+@media screen and (max-width: 1024px) {
+    .carta-container {
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 1.5rem; 
+    }
+  }
+  
+  @media screen and (max-width: 680px) {
+    .carta-container {
+      grid-template-columns: 1fr; 
+      gap: 1rem;
+    }
+    
+    .dolar-oficial {
+      width: 90%; 
+      margin: 15px auto;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .contenedor-botones {
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+    }
+    
+    button {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .contenedor-botones {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+    
+    button {
+        width: 100%; 
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
