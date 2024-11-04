@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historico</title>
     <link rel="stylesheet" href="./CSS/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>DolarApi</title>
+    
 </head>
 <body>
     <nav class="menu">
@@ -20,35 +21,23 @@
         
     </nav>
     <div id="tradingview-widget-container" class="widget-trading"></div>
-<section>
-    <h1>Historico</h2>
-</section>
-
-<div class="claseHistorico">
-    <form class="formularioHistorico" action="#">
-        <label for="casaElegida">¿Qué historial deseas cosultar??</label>
-        <div>
-            <select name="casaElegida" id="casaElegida">     
-                <option value="" disabled selected>Selecioná una moneda</option>   
-                <option value="oficial">Oficial</option>
-                <option value="blue">Blue</option>
-                <option value="bolsa">Bolsa</option>
-                <option value="contadoconliqui">CCL</option>
-                <option value="cripto">Cripto</option>
-                <option value="mayorista">Mayorista</option>
-                <option value="solidario">Solidario</option>
-                <option value="turista">Turista</option>
-            </select>
-            <input type="date" name="fechaElegida" id="fechaElegida" min="2011-01-03" max="">
-        </div>
-            <input type="button" id="buscarButton" value="Enviar" onclick="obtenerDatos()">       
-    </form>
-    <div id="resultado"></div>
-
-</div>
-    <footer>
-            <span class="titulo-pagina">Encontraras la cotizacion del tipo de cambio local 
-                (ARS) a otros tipos de cambios de paises limitrofes y del resto del mundo
+    <main>
+        <body class="contacto">
+            <form action="">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Ingrese nombre...">
+                <label for="email">E-Mail:</label>
+                <input type="email" name="email" id="email" placeholder="Ingrese e-mail..." required>
+                <label for="asunto">Asunto:</label>
+                <input type="text" name="asunto" id="asunto" placeholder="Ingrese asunto..." required>
+                <input class="enviar" type="submit" value="Enviar">
+            </form>
+        </body>
+    </main>
+    <div>
+        
+        <footer>
+            <span class="titulo-pagina">InfoDolar
             </span>
             
                <div class="info">
@@ -69,9 +58,15 @@
                     </ul>
                     
                 </div>
-                <p> &copy; 2024 DolarApi</p>
-        </footer>
+                <p> &copy; 2024 Info Dolar</p>
+            </footer>
+            
 </body>
-<script src="./Script/historicoPrecios.js" defer></script>
+
+
+
+<script src="./Script/peticionDolar.js" defer></script>
 <script src="./Script/tradingview.js" defer></script>
+
+
 </html>
