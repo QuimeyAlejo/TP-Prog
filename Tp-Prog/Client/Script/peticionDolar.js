@@ -3,7 +3,7 @@ const crearCartaCotizacion = (cotizacion) => {
     const carta = document.createElement('div');
     carta.classList.add('dolar-oficial'); // Usa la misma clase que tenías
   
-    
+    //  ${cotizacion.tipoDeCambio}
     carta.innerHTML = `
             <div class="dolar"> Dolar ${cotizacion.nombre}</div>
           <div class="compra-venta">
@@ -39,6 +39,8 @@ const peticionesDolares = async () => {
         const data2 = await response.json();
         const cotizaciones = data2.map(moneda => ({
             nombre: moneda.nombre,
+          //  tipoDeCambio: moneda.casa,
+
             venta: moneda.venta,
             compra: moneda.compra
         }));

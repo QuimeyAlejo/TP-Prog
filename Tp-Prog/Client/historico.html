@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historico</title>
     <link rel="stylesheet" href="./CSS/styles.css">
-    <link rel="stylesheet" href="./CSS/gif.css">
-    <title>DolarApi</title>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <nav class="menu">
@@ -21,15 +19,33 @@
         
     </nav>
     <div id="tradingview-widget-container" class="widget-trading"></div>
-  <main>
-      <h1>Cambio de moneda ARS a otro tipo de cambio</h1>
-      <img id="gifCarga" src="./Img/cargando.webp" alt="Cargando...">
-      <div class="carta-container"></div>
-    </main>
+<section>
+    <h1>Historico</h2>
+</section>
 
-    <div>
-        
-        <footer>
+<div class="claseHistorico">
+    <form class="formularioHistorico" action="#">
+        <label for="casaElegida">¿Qué historial deseas cosultar??</label>
+        <div>
+            <select name="casaElegida" id="casaElegida">     
+                <option value="" disabled selected>Selecioná una moneda</option>   
+                <option value="oficial">Oficial</option>
+                <option value="blue">Blue</option>
+                <option value="bolsa">Bolsa</option>
+                <option value="contadoconliqui">CCL</option>
+                <option value="cripto">Cripto</option>
+                <option value="mayorista">Mayorista</option>
+                <option value="solidario">Solidario</option>
+                <option value="turista">Turista</option>
+            </select>
+            <input type="date" name="fechaElegida" id="fechaElegida" min="2011-01-03" max="">
+        </div>
+            <input type="button" id="buscarButton" value="Enviar" onclick="obtenerDatos()">       
+    </form>
+    <div id="resultado"></div>
+
+</div>
+    <footer>
             <span class="titulo-pagina">Encontraras la cotizacion del tipo de cambio local 
                 (ARS) a otros tipos de cambios de paises limitrofes y del resto del mundo
             </span>
@@ -52,13 +68,9 @@
                     </ul>
                     
                 </div>
-                <p> &copy; 2024 Mi Pagina</p>
-            </footer>
+                <p> &copy; 2024 DolarApi</p>
+        </footer>
 </body>
-
-
-
-<script src="./Script/integrador.js" defer></script>
+<script src="./Script/historicoPrecios.js" defer></script>
 <script src="./Script/tradingview.js" defer></script>
-
 </html>

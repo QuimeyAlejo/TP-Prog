@@ -10,22 +10,28 @@
 </head>
 <body>
     <nav class="menu">
-        <button onclick="window.location.href='index.html'">Inicio</button>
-        <button onclick="window.location.href='dolar.html'">Dólar</button> 
-       <button>Historico</button>
+        <div class="contenedor">
+            <div class="contenedor-botones">
+                <button class="boton" onclick="window.location.href='index.html'"><span>Inicio</span></button>
+                <button class="boton" onclick="window.location.href='dolar.html'"><span>Dolar</span></button> 
+                <button class="boton" onclick="window.location.href='historico.html'"><span>Historico</span></button>
+            </div>
+        </div>
+        
     </nav>
-    
+    <div id="tradingview-widget-container" class="widget-trading"></div>
     <main>
-        <h2>Tipo de cambio DOLAR</h2>
+        <h1>Tipo de cambio DOLAR</h1>
         <div class="carta-container"></div>
     </main>
     <div>
         
         <footer>
-            <span class="titulo-pagina">InfoDolar</span>
+            <span class="titulo-pagina">InfoDolar
+            </span>
             
                <div class="info">
-                   
+                    <img class="logoutn" src="./Img/utn.png" alt="Logo UTN" height="50px" width="50px">
                    <ul>
                        <li class="titulo">Integrantes:</li>
                        <li>Chieu Santiago</li>
@@ -41,7 +47,6 @@
                         <li>Fuente: <a class="li-text" href="https://dolarapi.com/docs/">DolarApi</a></li>
                     </ul>
                     
-                    <img src="./Img/utn.png" alt="Logo UTN" height="50px" width="50px">
                 </div>
                 <p> &copy; 2024 Info Dolar</p>
             </footer>
@@ -51,7 +56,7 @@
 
 
 <script src="./Script/peticionDolar.js" defer></script>
-
+<script src="./Script/tradingview.js" defer></script>
 
 
 </html>

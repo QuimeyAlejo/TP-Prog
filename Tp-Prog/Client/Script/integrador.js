@@ -1,4 +1,5 @@
 const crearCartaCotizacion = (cotizacion) => {
+  
   const carta = document.createElement('div');
   carta.classList.add('dolar-oficial');
 
@@ -42,7 +43,7 @@ const getCotizaciones = async () => {
   mostrarGifCarga();
   const timer = setTimeout(() => {
     ocultarGifCarga();
-  }, 5000000);
+  }, 5000);
 
   try {
       const response = await fetch("https://dolarapi.com/v1/cotizaciones");
