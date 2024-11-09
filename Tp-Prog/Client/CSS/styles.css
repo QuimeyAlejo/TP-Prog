@@ -206,6 +206,22 @@ button span {
     margin: 0 auto;
 }
 
+#precio-historico {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 5px;
+    height: auto;
+    margin: auto;
+    padding: 20px;
+    max-width: 40%;
+}
+
+.consultar {
+    margin-top: 10px;
+}
+
 @keyframes cambioColor {
     0% { color: red; }
     25% { color: blue; }
@@ -224,16 +240,32 @@ button span {
     font-weight: bold;
 }
 
-
-form{
-    background-color:   #f3f3f3;
+.formContacto {
     max-width: 50%;
     height: auto;
     margin: auto;
     padding: 20px;
 }
+
+form{
+    background-color:   #f3f3f3;
+}
 label{
     margin: 10px;
+}
+
+.carta {
+    margin: 15px;
+    padding: 25px;
+    border: solid 2px black;
+    border-radius: 20px;
+    background-color: #F7EDE2;
+}
+.carta-container-historico {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
 }
 
 input{
