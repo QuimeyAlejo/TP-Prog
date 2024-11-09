@@ -14,14 +14,15 @@
             <div class="contenedor-botones">
                 <button class="boton" onclick="window.location.href='index.html'"><span>Inicio</span></button>
                 <button class="boton" onclick="window.location.href='dolar.html'"><span>Dolar</span></button> 
-                <button class="boton" onclick="window.location.href='historico.html'" ><span>Historico</span></button>
+                <button class="boton" onclick="window.location.href='historico2.html'"><span>Historico</span></button>
+                <button class="boton" onclick="window.location.href='contacto.html'"><span>Contacto</span></button>
             </div>
         </div>
         
     </nav>
-    
+    <div id="tradingview-widget-container" class="widget-trading"></div>
     <main>
-        <h2>Tipo de cambio DOLAR</h2>
+        <h1>Tipo de cambio DOLAR</h1>
         <form id="precio-historico">
             <label for="dolar">Fecha</label>
             <input type="date" id="fecha" required >
@@ -37,39 +38,37 @@
                 <option value="turista">Turista</option>
 
             </select>
-            <button type="submit">Consultar</button>
+            <button type="submit" class="consultar">Consultar</button>
         </form>
-        <div class="carta-container"></div>
+        <div class="carta-container-historico"></div>
     </main>
     <div>
-        
         <footer>
-            <span class="titulo-pagina">InfoDolar</span>
+            <span class="titulo-pagina">Encontraras la cotizacion del tipo de cambio local 
+                (ARS) a otros tipos de cambios de paises limitrofes y del resto del mundo
+            </span>
             
-               <div class="info">
-                   
-                   <ul>
-                       <li class="titulo">Integrantes:</li>
-                       <li>Chieu Santiago</li>
-                       <li>Lopez Quimey Alejo</li>
-                       <li>Saporiti Martin</li>
-                       <li>Coveri Lautaro</li>
-                    </ul>
-                    
-                    <ul>
-                        <li class="titulo">Educación</li>
-                        <li>UTN | Rosario-Santa Fe | Zeballos 1341</li>
-                        <li>Tecnicatura Universitaria en Programacion | Programacion II</li>
-                        <li>Fuente: <a class="li-text" href="https://dolarapi.com/docs/">DolarApi</a></li>
-                    </ul>
-                    
-                    <img src="./Img/utn.png" alt="Logo UTN" height="50px" width="50px">
-                </div>
-                <p> &copy; 2024 Mi Pagina</p>
-            </footer>
-            
+            <div class="info">
+                <img class="logoutn" src="./Img/utn.png" alt="Logo UTN" height="50px" width="50px">
+                <ul>
+                    <li class="titulo">Integrantes:</li>
+                    <li>Chieu Santiago</li>
+                    <li>Lopez Quimey Alejo</li>
+                    <li>Saporiti Martin</li>
+                    <li>Coveri Lautaro</li>
+                </ul>
+                <ul>
+                    <li class="titulo">Educación</li>
+                    <li>UTN | Rosario-Santa Fe | Zeballos 1341</li>
+                    <li>Tecnicatura Universitaria en Programacion | Programacion II</li>
+                    <li>Fuente: <a class="li-text" href="https://dolarapi.com/docs/">DolarApi</a></li>
+                </ul> 
+            </div>
+            <p> &copy; 2024 Mi Pagina</p>
+        </footer>
 </body>
 
 <script src="./Script/historicoDolar.js" defer></script>
+<script src="./Script/tradingview.js" defer></script>
 
 </html>
