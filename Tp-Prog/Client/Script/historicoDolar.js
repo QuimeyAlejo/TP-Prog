@@ -1,5 +1,5 @@
 const form = document.getElementById('precio-historico'); //obtenemos los datos
-const resultadoDiv = document.querySelector('.carta-container-historico');
+const resultadoDiv = document.querySelector('.carta-container');
 
 form.addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -27,7 +27,6 @@ form.addEventListener('submit', async function(event) {
         resultadoDiv.innerHTML = `
             <div class="carta">
                 <h2>Dolar ${dolarTipo.toUpperCase()} - ${fechaFormateada}</h2>
-                <hr/>
                 <p>Precio Compra: ${data.compra ?? 'N/A'}</p>
                 <p>Precio Venta: ${data.venta ?? 'N/A'}</p>
             </div>
