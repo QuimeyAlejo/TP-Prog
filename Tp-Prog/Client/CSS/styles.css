@@ -189,7 +189,20 @@ button span {
     border-right: 80px solid transparent;
     transition: .4s ease-in-out all;
 }
-
+.consultar::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: calc(-100% - 80px);
+    border-bottom: 80px solid #286cff;
+    border-right: 80px solid transparent;
+    transition: .4s ease-in-out all;
+}
+.consultar:hover::after {
+    left: 0;
+}
 .boton:hover::after {
     left: 0;
 }
@@ -254,15 +267,19 @@ button span {
     margin-top: 10px;
 }
 
-form{
-    background-color:   #f3f3f3;
+.formContacto{
+    background-color:   #F7EDE2;
     max-width: 50%;
     height: auto;
     margin: auto;
     padding: 20px;
     display: auto;
     justify-items: center;
+    border: solid 1px black;
+    border-radius: 20px;
 }
+
+
 label{
     margin: 10px;
 }
@@ -291,6 +308,15 @@ textarea{
     border-radius: 3px;
     border-style: none;    
     width: 515px;
+}
+.enviar:hover{
+
+    background: #424664
+}
+.precio-historico{
+    border: solid 1px black;
+    background-color: #F7EDE2;
+    border-radius: 20px;
 }
 
 
