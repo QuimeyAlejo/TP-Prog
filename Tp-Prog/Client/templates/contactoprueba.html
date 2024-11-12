@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="CSS/styles.css">
+
     <title>DolarApi</title>
     
 </head>
@@ -27,11 +28,11 @@
             <label for="email">E-Mail:</label>
             <input type="email" name="email" id="email" placeholder="Ingrese e-mail..." required>
             <label for="asunto">Asunto: Cotizacion</label>
-            <select name="asunto" id="asunto" required>
-                <option value="dolar">Dolar</option>
-                <option value="cotizacion">Otras monedas</option>
-               
+            <select name="consulta" id="consulta" required>
+                <option value="dolar">Dólar</option>
+                <option value="cotizaciones">Otras monedas</option>
             </select>
+            
             <input class="enviar" type="submit" value="Enviar">
         </form>
     </main>
