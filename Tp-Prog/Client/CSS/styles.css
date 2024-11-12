@@ -380,3 +380,11 @@ textarea{
     }
 }
 
+.error{
+    margin: 15px;
+    padding: 25px;
+    border: solid 1px black;
+    border-radius: 20px;
+    background-color: #F7EDE2;
+    font-weight: bold;
+}

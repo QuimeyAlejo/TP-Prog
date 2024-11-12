@@ -23,11 +23,14 @@
     <div id="tradingview-widget-container" class="widget-trading"></div>
     <main>
         <form class="formContacto" action="">                <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" placeholder="Ingrese nombre...">
+            <input type="text" name="nombre" id="nombre" placeholder="Ingrese nombre..." required>
             <label for="email">E-Mail:</label>
             <input type="email" name="email" id="email" placeholder="Ingrese e-mail..." required>
             <label for="asunto">Asunto:</label>
             <input type="text" name="asunto" id="asunto" placeholder="Ingrese asunto..." required>
+            <label for="mesaje">Mensaje:</label>
+            <textarea name="mensaje" id="mensaje" placeholder="Ingrese mensaje..." required></textarea>
+
             <input class="enviar" type="submit" value="Enviar">
         </form>
     </main>
