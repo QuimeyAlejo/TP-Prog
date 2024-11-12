@@ -76,8 +76,8 @@ def get_historico_data():
         return jsonify({'error': 'Paren la rotativa, hay un error...'}), response.status_code
     
 def enviar_correo(destinatario, asunto, cuerpo_html):
-    remitente = "qalopez2000@gmail.com"  
-    contraseña = "vjur usbs wvdg xpar"  #despues tengo que agregar en una variable de entorno estos datos que son sensibles
+    remitente = "tpintegrador58@gmail.com"  
+    contraseña = "mlam rbgr yhlb rczi"  #despues tengo que agregar en una variable de entorno estos datos que son sensibles
 
     msg = MIMEMultipart()
     msg['From'] = remitente
