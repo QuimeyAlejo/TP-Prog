@@ -20,13 +20,10 @@ form.addEventListener('submit', async function(event) {
     console.log('URL:', url); // Verifica la URL
 
     try {
-        //const response = await fetch("http://127.0.0.1:5000/historico"); 
         const response = await fetch(url);
-        if (!response.ok) throw new Error(console.log("error"));
-        
+        if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText);
+
         const data = await response.json();
-        console.log(data);
-        
         resultadoDiv.innerHTML = `
             <div class="carta">
                 <h2>Dolar ${dolarTipo.toUpperCase()} - ${fechaFormateada}</h2>
@@ -35,9 +32,8 @@ form.addEventListener('submit', async function(event) {
                 <p>Precio Venta: ${data.venta ?? 'N/A'}</p>
             </div>
         `;
-
     } catch (error) {
         console.error('Error:', error);
-        resultadoDiv.innerHTML = `<div class="error">Error en la solicitud. Seleccione fecha correcta (03/01/2011-Actualidad)</div>`;
+        resultadoDiv.innerHTML = `<p>Error: ${error.message}</p>`;
     }
 });

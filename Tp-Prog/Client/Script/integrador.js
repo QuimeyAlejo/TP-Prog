@@ -48,7 +48,7 @@ const getCotizaciones = async () => {
   try {
     // para usar el server de py descomentar la linea 50
     // const response = await fetch("http://127.0.0.1:5000/"); 
-     const response = await fetch("https://dolarapi.com/v1/cotizaciones");
+      const response = await fetch("https://dolarapi.com/v1/cotizaciones");
       const data2 = await response.json();
       const cotizaciones = data2.map(moneda => ({
           nombre: moneda.nombre,

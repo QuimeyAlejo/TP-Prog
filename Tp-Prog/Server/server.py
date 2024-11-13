@@ -1,12 +1,9 @@
 
-from flask import Flask, jsonify,request,render_template
+from flask import Flask, jsonify
 from flask_cors import CORS 
 import requests
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
-app = Flask(__name__ ,template_folder="../Client/templates") #esta  linea sirve para crear una app de flask e indicar __name__ a flask donde se encuenta el archivo principal de nuestro sv corte un main
+app = Flask(__name__) #esta  linea sirve para crear una app de flask e indicar __name__ a flask donde se encuenta el archivo principal de nuestro sv corte un main
 CORS(app) #cors nos permite que nuestra app o rutas de flask puedan realizar solicitudes y recibirlas
 @app.route('/dolar', methods=['GET'])
 def get_api_data():  
