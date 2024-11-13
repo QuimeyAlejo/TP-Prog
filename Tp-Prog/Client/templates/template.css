@@ -266,10 +266,10 @@ button span {
 .consultar {
     margin-top: 10px;
 }
-
 .formContacto{
     background-color:   #F7EDE2;
     max-width: 50%;
+    display: auto;
     height: auto;
     margin: auto;
     padding: 20px;
@@ -279,6 +279,13 @@ button span {
     border-radius: 20px;
 }
 
+input, select {
+    width: 90%; 
+    max-width: 500px;
+    height: 30px;
+    margin: 10px auto;
+    padding: 5px;
+}
 
 label{
     margin: 10px;
@@ -292,22 +299,18 @@ input{
     padding: 5px;
 }
 
-textarea{
-    display: block;
-    width: 500px;
-    height: 100px;
-    margin: 10px auto;
-    padding: 5px;
-    border-radius: 3px
-}
+
 
 .enviar{
     background-color: #313553;
     color: white;
-    margin: auto;
     border-radius: 3px;
     border-style: none;    
-    width: 515px;
+    width: 90%; 
+    max-width: 500px; 
+    height: 30px;
+    margin: 10px auto;
+    padding: 5px;
 }
 .enviar:hover{
 
@@ -362,6 +365,13 @@ textarea{
         font-size: 16px;
         padding: 10px;
     }
+
+    .formContacto {
+        padding: 15px;
+    }
+    input, select, .enviar {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -378,5 +388,13 @@ textarea{
     .info{
       flex-direction: row; 
     }
+
+    .formContacto {
+        padding: 15px;
+    }
+    input, select, .enviar {
+        width: 100%;
+    }
+   
 }
 
