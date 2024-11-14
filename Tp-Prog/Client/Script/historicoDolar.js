@@ -1,7 +1,7 @@
 const form = document.getElementById('precio-historico'); //obtenemos los datos
-const resultadoDiv = document.querySelector('.carta-container-historico');
+const resultadoDiv = document.querySelector('.carta-container-historico'); // busca el elemento que contiene para mas tarde manipularlo
 
-form.addEventListener('submit', async function(event) {
+form.addEventListener('submit', async function(event) { // clickea 'submit' y ocurre un evento por default
     event.preventDefault();
 
     const fecha = document.getElementById('fecha').value;
@@ -17,13 +17,13 @@ form.addEventListener('submit', async function(event) {
     const fechaFormateada = fecha.replace(/-/g, '/');
 
     let url = `https://api.argentinadatos.com/v1/cotizaciones/dolares/${dolarTipo}/${fechaFormateada}`;
-    console.log('URL:', url); // Verifica la URL
+    console.log('URL:', url); // Verifica la URL si contiene las variables
 
     try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText);
+        const response = await fetch(url); // solicitud HTTP a la URL 
+        if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText); //estaod 400-404-500
 
-        const data = await response.json();
+        const data = await response.json(); // lo parsea a objeto
         resultadoDiv.innerHTML = `
             <div class="carta">
                 <h2>Dolar ${dolarTipo.toUpperCase()} - ${fechaFormateada}</h2>
