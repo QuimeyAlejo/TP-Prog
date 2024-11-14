@@ -278,7 +278,9 @@ button span {
     border: solid 1px black;
     border-radius: 20px;
 }
-
+.conmain{
+    margin: 10px;
+}
 input, select {
     width: 90%; 
     max-width: 500px;
