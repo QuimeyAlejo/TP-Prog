@@ -1,4 +1,4 @@
-from flask import Flask, jsonify,request,render_template
+from flask import Flask, jsonify,request,render_template,redirect, url_for
 from flask_cors import CORS 
 import requests
 import smtplib
@@ -76,7 +76,7 @@ def get_historico_data():
     
 def enviar_correo(destinatario, asunto, cuerpo_html):
     remitente = "tpintegrador58@gmail.com"  
-    contrasenia = "mlam rbgr yhlb rczi"  #despues tengo que agregar en una variable de entorno estos datos que son sensibles
+    contraseña = "mlam rbgr yhlb rczi"  #despues tengo que agregar en una variable de entorno estos datos que son sensibles
 
     msg = MIMEMultipart()
     msg['From'] = remitente
@@ -90,7 +90,7 @@ def enviar_correo(destinatario, asunto, cuerpo_html):
     try:
         servidor = smtplib.SMTP('smtp.gmail.com', 587)
         servidor.starttls()
-        servidor.login(remitente, contrasenia)
+        servidor.login(remitente, contraseña)
         servidor.sendmail(remitente, destinatario, msg.as_string())
         servidor.quit()
         print("Correo enviado con exito pa")
@@ -101,7 +101,7 @@ def enviar_correo(destinatario, asunto, cuerpo_html):
 def procesar_consulta():
     if request.method == "GET":
         # Renderiza la plantilla cuando se accede con GET
-        return render_template("contactoprueba.html")
+        return render_template("contacto.html")
     email = request.form.get("email")
     consulta = request.form.get("consulta")
     nombre = request.form.get("nombre")
@@ -131,9 +131,15 @@ def procesar_consulta():
         # Enviar el correo con los datos de la consulta
         enviar_correo(email, f"Hola {nombre}.Resultados de {consulta}", cuerpo_html)
         return jsonify({"message": "Correo enviado con los resultados"}), 200
+        #return render_template("index.html")
+        #return redirect(url_for('procesar_consulta'))
+
     else:
         return jsonify({"error": "Error al obtener datos de la API"}), 500
 
+@app.route('/mensaje' , methods=['get'])
+def post_msj():
+    return render_template('postMensaje.html') 
 
 if __name__ == '__main__': #la aplicacion se ejecute solo cuando el archivo se ejecuta directamente, no cuando se importa.
     app.run(debug=True) # el modo debug en true sirve para que flask te tire los errores detallados si salta algo mal y vuelve a cargar cuando hay cambios en el codigo
