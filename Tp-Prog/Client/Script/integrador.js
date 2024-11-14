@@ -60,7 +60,7 @@ const getCotizaciones = async () => {
       console.log("cotizacion de la moneda ", cotizaciones);
       actualizarCotizaciones(cotizaciones); 
   } catch (error) {
-      console.log("Error al obtener los datos de la cotizacion Euro", error);
+      console.log("Error al obtener los datos de la cotizacion", error);
   } finally {
       clearTimeout(timer);
       ocultarGifCarga();
