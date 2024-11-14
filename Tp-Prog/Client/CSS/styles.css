@@ -324,7 +324,20 @@ textarea{
     border-radius: 20px;
     background-color: #F7EDE2;
 }
+.msgenv {
+    display: block;
+    margin: 0 auto; 
+    max-width: 100%; 
+    height: auto; 
+    width: 200px;
+}
 
+
+@media (max-width: 600px) {
+    .msgenv {
+        width: 150px; 
+    }
+}
 @media screen and (max-width: 680px) {
     .info {
         flex-direction: row;
