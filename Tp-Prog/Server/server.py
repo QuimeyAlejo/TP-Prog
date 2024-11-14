@@ -100,42 +100,42 @@ def enviar_correo(destinatario, asunto, cuerpo_html):
 @app.route('/consulta', methods=["GET", "POST"])
 def procesar_consulta():
     if request.method == "GET":
-        # Renderiza la plantilla cuando se accede con GET
         return render_template("contacto.html")
-    email = request.form.get("email")
-    consulta = request.form.get("consulta")
-    nombre = request.form.get("nombre")
+
+    email = request.json.get("email")
+    consulta = request.json.get("consulta")
+    nombre = request.json.get("nombre")
+
+    if not email or not consulta or not nombre:
+        return jsonify({"error": "Todos los campos son obligatorios"}), 400
 
     print(f"Email recibido: {email}")
     print(f"Consulta recibida: {consulta}")
-    print(f"Consulta recibida: {nombre}")
+    print(f"Nombre recibido: {nombre}")
     
     if consulta == "dolar":
         api_url = "https://dolarapi.com/v1/dolares"
     elif consulta == "cotizaciones":
         api_url = "https://dolarapi.com/v1/cotizaciones"
     else:
-        return jsonify({"error": "Consulta no valida"}), 400
+        return jsonify({"error": "Consulta no válida"}), 400
 
-    
     response = requests.get(api_url)
     if response.status_code == 200:
         data = response.json()
 
-        # pasamos los datos al formato HTML para mandar el msj
         cuerpo_html = f"<h1>Resultados de la consulta: {consulta}</h1><ul>"
         for item in data:
             cuerpo_html += f"<li><strong>Casa:</strong> {item['casa']}, <strong>Compra:</strong> {item['compra']}, <strong>Venta:</strong> {item['venta']}</li>"
         cuerpo_html += "</ul>"
 
-        # Enviar el correo con los datos de la consulta
-        enviar_correo(email, f"Hola {nombre}.Resultados de {consulta}", cuerpo_html)
-        return jsonify({"message": "Correo enviado con los resultados"}), 200
-        #return render_template("index.html")
-        #return redirect(url_for('procesar_consulta'))
-
+        enviar_correo(email, f"Hola {nombre}. Resultados de {consulta}", cuerpo_html)
+        
+        # Devolvemos un mensaje de éxito en formato JSON
+        return jsonify({"message": "Consulta procesada exitosamente"}), 200
     else:
         return jsonify({"error": "Error al obtener datos de la API"}), 500
+
 
 @app.route('/mensaje' , methods=['get'])
 def post_msj():

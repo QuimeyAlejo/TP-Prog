@@ -1,23 +1,41 @@
-document.getElementById('consultaForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita la recarga de la página
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("consultaForm");
 
-    const formData = new FormData(event.target);
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();  // Evita la recarga de la página
 
-    fetch('/consulta', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (response.status === 200) {
-            // Redirige a la página de mensaje si el código de estado es 200
-            window.location.href = '/mensaje';
-        } else {
-            // Maneja el error si el estado no es 200
-            alert("Hubo un problema con la solicitud. Inténtalo nuevamente.");
-        }
-    })
-    .catch(error => {
-        console.error("Error en la solicitud:", error);
-        alert("No se pudo enviar la solicitud. Inténtalo nuevamente.");
+        const nombre = document.getElementById("nombre").value;
+        console.log(nombre)
+        const email = document.getElementById("email").value;
+        console.log(email)
+        const consulta = document.getElementById("consulta").value;
+        console.log(consulta)
+        await getConsulta(nombre, email, consulta); // Llama a la función para manejar el envío
     });
 });
+
+const getConsulta = async (nombre, email, consulta) => {
+    try {
+        const response = await fetch("http://127.0.0.1:5000/consulta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ nombre, email, consulta }) // Datos enviados como JSON
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.message); 
+            alert("Consulta procesada exitosamente.");
+            window.location.href = "postMensaje.html"; // Redirige después del éxito
+        } else {
+            const errorData = await response.json();
+            console.error("Error en la consulta:", errorData.error);
+            alert("Hubo un problema: " + errorData.error); 
+        }
+    } catch (error) {
+        console.error("Error al realizar la consulta:", error);
+        alert("Error al realizar la consulta."); 
+    }
+};
