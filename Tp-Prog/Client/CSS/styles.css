@@ -310,7 +310,6 @@ textarea{
     width: 515px;
 }
 .enviar:hover{
-
     background: #424664
 }
 .precio-historico{
@@ -318,7 +317,13 @@ textarea{
     background-color: #F7EDE2;
     border-radius: 20px;
 }
-
+.carta-container-historico p {
+    margin: 15px;
+    padding: 25px;
+    border: solid 2px black;
+    border-radius: 20px;
+    background-color: #F7EDE2;
+}
 
 @media screen and (max-width: 680px) {
     .info {

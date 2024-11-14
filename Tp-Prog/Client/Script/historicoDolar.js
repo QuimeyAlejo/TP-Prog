@@ -6,11 +6,6 @@ form.addEventListener('submit', async function(event) { // clickea 'submit' y oc
 
     const fecha = document.getElementById('fecha').value;
     const dolarTipo = document.getElementById('dolar').value;
- /*  */
-    if (!fecha || !dolarTipo) {
-        resultadoDiv.innerHTML = '<p>Por favor, complete todos los campos.</p>';
-        return;
-    }
 
     // aca modifico la fecha porque lo tiraba con - y no con / a lo que me daba error al momento
     // de tirar el get
@@ -21,8 +16,13 @@ form.addEventListener('submit', async function(event) { // clickea 'submit' y oc
 
     try {
         const response = await fetch(url); // solicitud HTTP a la URL 
-        if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText); //estaod 400-404-500
-
+        if (!response.ok) {
+            resultadoDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+        }
+            
+            
+/*             throw new Error('Error en la solicitud: ' + response.statusText); //estado 400-404-500
+ */
         const data = await response.json(); // lo parsea a objeto
         resultadoDiv.innerHTML = `
             <div class="carta">

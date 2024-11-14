@@ -76,7 +76,7 @@ def get_historico_data():
     
 def enviar_correo(destinatario, asunto, cuerpo_html):
     remitente = "tpintegrador58@gmail.com"  
-    contraseña = "mlam rbgr yhlb rczi"  #despues tengo que agregar en una variable de entorno estos datos que son sensibles
+    contrasenia = "mlam rbgr yhlb rczi"  #despues tengo que agregar en una variable de entorno estos datos que son sensibles
 
     msg = MIMEMultipart()
     msg['From'] = remitente
@@ -90,7 +90,7 @@ def enviar_correo(destinatario, asunto, cuerpo_html):
     try:
         servidor = smtplib.SMTP('smtp.gmail.com', 587)
         servidor.starttls()
-        servidor.login(remitente, contraseña)
+        servidor.login(remitente, contrasenia)
         servidor.sendmail(remitente, destinatario, msg.as_string())
         servidor.quit()
         print("Correo enviado con exito pa")

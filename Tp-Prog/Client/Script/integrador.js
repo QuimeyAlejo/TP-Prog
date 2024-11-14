@@ -16,7 +16,7 @@ const crearCartaCotizacion = (cotizacion) => {
         </div>
     </div>
   `;
-  // que complicado es hacer un backstick 
+  // que complicado es hacer backticks
 
   return carta; 
 };
