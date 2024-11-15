@@ -91,7 +91,7 @@ def procesar_consulta():
         if consulta == "dolar":
             datos = Dolar.obtener_datos()
         elif consulta == "cotizaciones":
-            datos = Cotizaciones.obtener_datos()
+            datos = Cotizacion.obtener_datos()
         else:
             return jsonify({"error": "Consulta no válida"}), 400
 
