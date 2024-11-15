@@ -168,7 +168,7 @@ def crear_instancias_cotizaciones_desde_api():
     monedas = {}
 
     for dato in datos:
-        casa=dato["casa"]
+        tipo=dato["casa"]
         nombre_moneda = dato["moneda"]
         nombre_tipo = dato["nombre"]
         valor_compra = dato["compra"]
