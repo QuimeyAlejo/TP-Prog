@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
+import requests
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -88,8 +89,8 @@ def enviar_correo(destinatario, asunto, cuerpo_html):
 @app.route('/consulta', methods=["GET", "POST"])
 def procesar_consulta():
     if request.method == "GET":
-        return render_template("contacto.html")  
-  
+        return render_template("contacto.html")
+
     email = request.json.get("email")
     consulta = request.json.get("consulta")
     nombre = request.json.get("nombre")
@@ -97,28 +98,42 @@ def procesar_consulta():
     if not email or not consulta or not nombre:
         return jsonify({"error": "Todos los campos son obligatorios"}), 400
 
-    print(f"Email recibido: {email}")
-    print(f"Consulta recibida: {consulta}")
-    print(f"Nombre recibido: {nombre}")
+    # antes haciamos  si el valor era dolar apunte a la api dolar si no era cotizacion, ahora
+    # lo que hacemos es invocar al metodo correspondiende te las clases
+    consultas_disponibles = {
+        "dolar": crear_instancias_dolar_desde_api,
+        "cotizaciones": crear_instancias_cotizaciones_desde_api
+    }
+
+    if consulta not in consultas_disponibles:
+        return jsonify({"error": "Consulta no válida"}), 400
 
     try:
        
-        if consulta == "dolar":
-            datos = Tipo.obtener_datos()
-        elif consulta == "cotizaciones":
-            datos = Cotizacion.obtener_datos()
-        else:
-            return jsonify({"error": "Consulta no válida"}), 400
-
+        monedas = consultas_disponibles[consulta]()
         
         cuerpo_html = f"<h1>Resultados de la consulta: {consulta}</h1><ul>"
-        for item in datos:
-            info = item.mostrar_info()
-            cuerpo_html += f"<li><strong>Casa:</strong> {info['casa']}, <strong>Compra:</strong> {info['compra']}, <strong>Venta:</strong> {info['venta']}</li>"
+
+        # Recorriendo las monedas, tipos y cotizaciones
+        for moneda in monedas.values():
+            for tipo in moneda.tipo_casas:
+                for cotizacion in tipo.mostrar_cotizaciones():
+                    # armamos el cuerpo html para ser enviado por correo
+                    cuerpo_html += f"""
+                    <li>
+                        <strong>Moneda:</strong> {moneda.mostrar_nombre()}<br>
+                        <strong>Tipo:</strong> {tipo.mostrar_nombre_tipo()}<br>
+                        <strong>Compra:</strong> {cotizacion.mostrar_compra()}<br>
+                        <strong>Venta:</strong> {cotizacion.mostrar_venta()}<br>
+                        <strong>Fecha de Actualización:</strong> {cotizacion.mostrar_actualizacion().isoformat()}<br>
+                    </li>
+                    """
         cuerpo_html += "</ul>"
 
+        # Enviar el correo con los resultados
         enviar_correo(email, f"Hola {nombre}. Resultados de {consulta}", cuerpo_html)
         return jsonify({"message": "Consulta procesada exitosamente"}), 200
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
