@@ -64,10 +64,10 @@ def get_historico_data():
     else:
         return jsonify({'error': 'Paren la rotativa, hay un error...'}), response.status_code
 
-# Función para enviar correos electrónicos con los resultados de la consulta
+
 def enviar_correo(destinatario, asunto, cuerpo_html):
     remitente = "tpintegrador58@gmail.com"  
-    contraseña = "mlam rbgr yhlb rczi"  # Después tengo que agregar en una variable de entorno estos datos que son sensibles
+    contraseña = "mlam rbgr yhlb rczi"  
     msg = MIMEMultipart()
     msg['From'] = remitente
     msg['To'] = destinatario
@@ -80,22 +80,20 @@ def enviar_correo(destinatario, asunto, cuerpo_html):
         servidor.login(remitente, contraseña)
         servidor.sendmail(remitente, destinatario, msg.as_string())
         servidor.quit()
-        print("Correo enviado con éxito pa")  # Esta línea imprime para depurar
+        print("Correo enviado con éxito pa")  
     except Exception as e:
         print(f"Error al enviar el correo: {e}")
 
-# Ruta para procesar las consultas y enviar un correo con los resultados
+
 @app.route('/consulta', methods=["GET", "POST"])
 def procesar_consulta():
     if request.method == "GET":
-        return render_template("contacto.html")  # Muestra el formulario para hacer la consulta
-
-    # Procesa la consulta recibida por POST
+        return render_template("contacto.html")  
+  
     email = request.json.get("email")
     consulta = request.json.get("consulta")
     nombre = request.json.get("nombre")
 
-    # Verifica que todos los campos estén completos
     if not email or not consulta or not nombre:
         return jsonify({"error": "Todos los campos son obligatorios"}), 400
 
@@ -104,22 +102,21 @@ def procesar_consulta():
     print(f"Nombre recibido: {nombre}")
 
     try:
-        # Dependiendo de la consulta, obtiene los datos
+       
         if consulta == "dolar":
-            datos = Dolar.obtener_datos()
+            datos = Tipo.obtener_datos()
         elif consulta == "cotizaciones":
             datos = Cotizacion.obtener_datos()
         else:
             return jsonify({"error": "Consulta no válida"}), 400
 
-        # Prepara el cuerpo del correo en formato HTML
+        
         cuerpo_html = f"<h1>Resultados de la consulta: {consulta}</h1><ul>"
         for item in datos:
             info = item.mostrar_info()
             cuerpo_html += f"<li><strong>Casa:</strong> {info['casa']}, <strong>Compra:</strong> {info['compra']}, <strong>Venta:</strong> {info['venta']}</li>"
         cuerpo_html += "</ul>"
 
-        # Envía el correo con los resultados
         enviar_correo(email, f"Hola {nombre}. Resultados de {consulta}", cuerpo_html)
         return jsonify({"message": "Consulta procesada exitosamente"}), 200
     except Exception as e:
