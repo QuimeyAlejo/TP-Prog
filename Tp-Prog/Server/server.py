@@ -107,11 +107,6 @@ def procesar_consulta():
         return jsonify({"error": str(e)}), 500
 
 
-
-@app.route('/mensaje' , methods=['get'])
-def post_msj():
-    return render_template('postMensaje.html') 
-
 if __name__ == '__main__': #la aplicacion se ejecute solo cuando el archivo se ejecuta directamente, no cuando se importa.
     app.run(debug=True) # el modo debug en true sirve para que flask te tire los errores detallados si salta algo mal y vuelve a cargar cuando hay cambios en el codigo
 

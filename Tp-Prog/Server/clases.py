@@ -1,7 +1,7 @@
 import requests
 
 class Moneda:
-    def __init__(self,nombre,casa,compra,venta,moneda,fecha_actualizacion): #__init__ es el constructor, es un mentodo
+    def __init__(self,nombre,casa,compra,venta,moneda,fecha_actualizacion): #__init__ es el constructor, es un metodo
         self.nombre=nombre
         self.casa=casa
         self.compra=compra
@@ -19,6 +19,7 @@ class Dolar(Moneda):
         response = requests.get(api_url)
         if response.status_code == 200:
             data = response.json()
+          #  print("Get Dolar",data)
             return [
                 Dolar(
                     nombre=item['nombre'],
