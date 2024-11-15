@@ -4,7 +4,7 @@ const crearCartaCotizacion = (cotizacion) => {
   carta.classList.add('dolar-oficial');
 
   carta.innerHTML = `  
-    <div class="dolar">${cotizacion.tipoDeCambio} Oficial</div>
+    <div class="dolar">${cotizacion.nombre} Oficial</div>
     <div class="compra-venta">
         <div class="compra">
             <span>Compra</span>
@@ -53,12 +53,11 @@ const getCotizaciones = async () => {
       console.log('cotiza',data2)
       const cotizaciones = data2.map(moneda => ({
           nombre: moneda.nombre,
-          tipoDeCambio: moneda.tipo,
           venta: moneda.venta,
           compra: moneda.compra
       }));
 
-      console.log("cotizacion de la moneda ", cotizaciones);
+     // console.log("cotizacion de la moneda ", cotizaciones);
       actualizarCotizaciones(cotizaciones); 
   } catch (error) {
       console.log("Error al obtener los datos de la cotizacion", error);
