@@ -4,7 +4,7 @@ const crearCartaCotizacion = (cotizacion) => {
   carta.classList.add('dolar-oficial');
 
   carta.innerHTML = `  
-    <div class="dolar">${cotizacion.nombre} ${cotizacion.tipoDeCambio}</div>
+    <div class="dolar">${cotizacion.tipoDeCambio} Oficial</div>
     <div class="compra-venta">
         <div class="compra">
             <span>Compra</span>
@@ -47,12 +47,13 @@ const getCotizaciones = async () => {
 
   try {
     // para usar el server de py descomentar la linea 50
-    // const response = await fetch("http://127.0.0.1:5000/"); 
-      const response = await fetch("https://dolarapi.com/v1/cotizaciones");
+     const response = await fetch("http://127.0.0.1:5000/"); 
+     // const response = await fetch("https://dolarapi.com/v1/cotizaciones");
       const data2 = await response.json();
+      console.log('cotiza',data2)
       const cotizaciones = data2.map(moneda => ({
           nombre: moneda.nombre,
-          tipoDeCambio: moneda.casa,
+          tipoDeCambio: moneda.tipo,
           venta: moneda.venta,
           compra: moneda.compra
       }));
