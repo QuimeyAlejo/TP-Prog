@@ -35,8 +35,8 @@ const crearCartaCotizacion = (cotizacion) => {
   
 const peticionesDolares = async () => {
     try {
-        const response = await fetch("https://dolarapi.com/v1/dolares"); // aca mas que nada sirve para pedir directamente a la api, en caso de server local descometnar la linea 39
-        //const response = await fetch("http://127.0.0.1:5000/dolar"); 
+        // const response = await fetch("https://dolarapi.com/v1/dolares"); // aca mas que nada sirve para pedir directamente a la api, en caso de server local descometnar la linea 39
+        const response = await fetch("http://127.0.0.1:5000/dolar"); 
         //esta linea 39 sirve solo si esta levantado el py
 
         const data2 = await response.json();

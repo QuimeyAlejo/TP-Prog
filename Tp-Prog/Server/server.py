@@ -4,55 +4,29 @@ import requests
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from clases import Dolar, Cotizacion
+
 
 app = Flask(__name__ ,template_folder="../Client/templates") #esta  linea sirve para crear una app de flask e indicar __name__ a flask donde se encuenta el archivo principal de nuestro sv corte un main
 CORS(app) #cors nos permite que nuestra app o rutas de flask puedan realizar solicitudes y recibirlas
+
+
 @app.route('/dolar', methods=['GET'])
-def get_api_data():  
-    api_url = "https://dolarapi.com/v1/dolares"  
-    response = requests.get(api_url)   
-    print("GET DOLARES")  
-    if response.status_code == 200: #el cod 200 es cuando todo esta OK 
-        data = response.json()
-        info_moneda = [];
-        
-        for i in data:
-            info_moneda.append({
-                'casa': i['casa'],
-                'compra': i['compra'],
-                'venta': i['venta'],
-                'nombre': i['nombre'],
-                'moneda': i['moneda'],
-                'fechaActualizacion': i['fechaActualizacion']
-                
-            })
-        return jsonify(info_moneda)
-    else:
-        return jsonify({'error': 'Paren la rotativa, hay un error...'}), response.status_code
+def get_dolares():
+    try:
+        dolares = Dolar.obtener_datos()
+        return jsonify([dolar.mostrar_info() for dolar in dolares])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 
 @app.route('/', methods=['GET'])
-def get_cotizaciones():  
-    api_url = "https://dolarapi.com/v1/cotizaciones"  
-    response = requests.get(api_url) 
-    print("GET COTIZACIONES")    
-    if response.status_code == 200: #el cod 200 es cuando todo esta OK 
-        data = response.json()
-        info_moneda = [];
-        
-        for i in data:
-            info_moneda.append({
-                'casa': i['casa'],
-                'compra': i['compra'],
-                'venta': i['venta'],
-                'nombre': i['nombre'],
-                'moneda': i['moneda'],
-                'fechaActualizacion': i['fechaActualizacion']
-                
-            })
-        return jsonify(info_moneda)
-    else:
-        return jsonify({'error': 'Paren la rotativa, hay un error...'}), response.status_code
+def get_cotizaciones():
+    try:
+        cotizaciones = Cotizacion.obtener_datos()
+        return jsonify([cotizacion.mostrar_info() for cotizacion in cotizaciones])
+    except Exception as e:
+        return jsonify({"error al obtener las cotizaciones": str(e)}), 400
 
 @app.route('/historico', methods=['GET'])
 def get_historico_data():  
@@ -112,29 +86,26 @@ def procesar_consulta():
     print(f"Email recibido: {email}")
     print(f"Consulta recibida: {consulta}")
     print(f"Nombre recibido: {nombre}")
-    
-    if consulta == "dolar":
-        api_url = "https://dolarapi.com/v1/dolares"
-    elif consulta == "cotizaciones":
-        api_url = "https://dolarapi.com/v1/cotizaciones"
-    else:
-        return jsonify({"error": "Consulta no válida"}), 400
 
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        data = response.json()
+    try:
+        if consulta == "dolar":
+            datos = Dolar.obtener_datos()
+        elif consulta == "cotizaciones":
+            datos = Cotizaciones.obtener_datos()
+        else:
+            return jsonify({"error": "Consulta no válida"}), 400
 
         cuerpo_html = f"<h1>Resultados de la consulta: {consulta}</h1><ul>"
-        for item in data:
-            cuerpo_html += f"<li><strong>Casa:</strong> {item['casa']}, <strong>Compra:</strong> {item['compra']}, <strong>Venta:</strong> {item['venta']}</li>"
+        for item in datos:
+            info = item.mostrar_info()
+            cuerpo_html += f"<li><strong>Casa:</strong> {info['casa']}, <strong>Compra:</strong> {info['compra']}, <strong>Venta:</strong> {info['venta']}</li>"
         cuerpo_html += "</ul>"
 
         enviar_correo(email, f"Hola {nombre}. Resultados de {consulta}", cuerpo_html)
-        
-        # Devolvemos un mensaje de éxito en formato JSON
         return jsonify({"message": "Consulta procesada exitosamente"}), 200
-    else:
-        return jsonify({"error": "Error al obtener datos de la API"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 @app.route('/mensaje' , methods=['get'])
