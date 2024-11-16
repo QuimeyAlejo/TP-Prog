@@ -50,7 +50,7 @@ const getCotizaciones = async () => {
      const response = await fetch("http://127.0.0.1:5000/"); 
      // const response = await fetch("https://dolarapi.com/v1/cotizaciones");
       const data2 = await response.json();
-      console.log('cotiza',data2)
+      //console.log('cotiza',data2)
       const cotizaciones = data2.map(moneda => ({
           nombre: moneda.nombre,
           venta: moneda.venta,

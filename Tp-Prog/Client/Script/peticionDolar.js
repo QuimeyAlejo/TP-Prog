@@ -40,7 +40,7 @@ const peticionesDolares = async () => {
         //esta linea 39 sirve solo si esta levantado el py
 
         const data2 = await response.json();
-        console.log('USD',data2)
+        //console.log('USD',data2)
         const cotizaciones = data2.map(moneda => ({
             nombre: moneda.nombre,
             venta: moneda.venta,

@@ -86,7 +86,7 @@ def print_info_dolares():
                 fecha_formateada = fecha_dt.strftime('%d-%m-%Y %H:%M') # formato fecha
             else:
                 fecha_formateada = "Fecha no disponible"
-
+            
             info_moneda.append({
                 'casa': i['casa'],
                 'compra': i['compra'],
@@ -127,10 +127,14 @@ def print_info_general():
                 fecha_formateada = fecha_dt.strftime('%d-%m-%Y %H:%M')
             else:
                 fecha_formateada = "Fecha no disponible"
+            
+            compra = round(i['compra'], 2)
+            venta = round(i['venta'], 2)
+
             info_moneda.append({
                 'casa': i['casa'],
-                'compra': i['compra'],
-                'venta': i['venta'],
+                'compra': compra,
+                'venta': venta,
                 'nombre': i['nombre'],
                 'moneda': i['moneda'],
                 'fechaActualizacion': fecha_formateada              
@@ -139,7 +143,7 @@ def print_info_general():
         for item in info_moneda:
             email_body += f"{item['moneda']}\n"
             email_body += f"{item['nombre']}\n"
-            email_body += f"Compra: {item['compra']}\n"
+            email_body += f"Compra: {(item['compra'])}\n"
             email_body += f"Venta: {item['venta']}\n"
             email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
             email_body += "*" * 30 + "\n"  # Separador entre cada casa de cambio
@@ -179,7 +183,7 @@ def procesar():
             'Content-Type': 'application/json',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
             'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Language': 'es-ES,es;q=0.9',
             'Origin': 'http://127.0.0.1:5000/',  
             'Referer': 'http://127.0.0.1:5000/'
         }
