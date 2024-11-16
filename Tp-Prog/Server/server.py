@@ -69,83 +69,135 @@ def get_info_dolares():
 
 
 
-# Ruta para obtener cotizaciones
-@app.route('/consulta', methods=['GET', 'POST'])
-def consulta(): 
-    url = "https://dolarapi.com/v1/cotizaciones"
-    response = requests.get(url)
-    if response.status_code == 200:
+# prepara la info de dolares para mandar por mail    
+@app.route('/emailDolares', methods=['GET'])
+def print_info_dolares(): 
+    url = "https://dolarapi.com/v1/dolares"
+    response = requests.get(url)   
+    print(response.json(), "Datos recibidos de la API")  
+    if response.status_code == 200: # OK 
         data = response.json()
         info_moneda = []
         
         for i in data:
             fecha_actualizacion = i.get('fechaActualizacion')
-            try:
+            if fecha_actualizacion:
                 fecha_dt = datetime.strptime(fecha_actualizacion, "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                fecha_dt = datetime.strptime(fecha_actualizacion, "%Y-%m-%dT%H:%M:%SZ")
-            
-            fechaFormateada = fecha_dt.strftime('%d-%m-%Y %H:%M')
-            
+                fecha_formateada = fecha_dt.strftime('%d-%m-%Y %H:%M') # formato fecha
+            else:
+                fecha_formateada = "Fecha no disponible"
+
             info_moneda.append({
                 'casa': i['casa'],
                 'compra': i['compra'],
                 'venta': i['venta'],
                 'nombre': i['nombre'],
                 'moneda': i['moneda'],
-                'fechaActualizacion': fechaFormateada              
+                'fechaActualizacion': fecha_formateada               
             })
-
-        return jsonify(info_moneda), 200
+        email_body = "COTIZACIONES DOLARES\n\n"
+        for item in info_moneda:
+            email_body += f"{item['moneda']}\n"
+            email_body += f"{item['nombre']}\n"
+            email_body += f"Compra: {item['compra']}\n"
+            email_body += f"Venta: {item['venta']}\n"
+            email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
+            email_body += "-" * 30 + "\n"  # Separador entre cada casa de cambio
+        
+        return email_body
     else:
         return jsonify({'error': 'No es posible cargar la info'}), response.status_code
 
-# Función para enviar correos
-def enviar_correo(nombre, correo, body_content):
-    data = {
-        'service_id': 'infodolar',
-        'template_id': 'cotizaciones',
-        'user_id': 'xLpu-WbDZiqP-AuSj',
-        'accessToken': 'esPrth6Ahmt2NpKLUPo8O',
-        'template_params': {
-            'user_email': correo,
-            'from_name': 'InfoDolar',
-            'user_name': nombre,
-            'message': body_content
-        }
-    }
-    print(data, 'esto es dataaaaaaa')
-    headers = {'Content-Type': 'application/json'}
-    response = requests.post(
-        'https://api.emailjs.com/api/v1.0/email/send',
-        data=json.dumps(data),
-        headers=headers
-    )
-    response.raise_for_status()
+# prepara la info de cotizaciones generales para mandar por mail 
+@app.route('/emailCotizaciones', methods=['GET'])
+def print_info_general(): 
+    url = "https://dolarapi.com/v1/cotizaciones"
+    response = requests.get(url)   
+    print(response.json(), "Datos recibidos de la API")  
+    if response.status_code == 200: # OK 
+        data = response.json()
+        info_moneda = []
+        
+        for i in data:
+            fecha_actualizacion = i.get('fechaActualizacion')
+            if fecha_actualizacion:
+                fecha_dt = datetime.strptime(fecha_actualizacion, "%Y-%m-%dT%H:%M:%S.%fZ")
+                fecha_formateada = fecha_dt.strftime('%d-%m-%Y %H:%M')
+            else:
+                fecha_formateada = "Fecha no disponible"
+            info_moneda.append({
+                'casa': i['casa'],
+                'compra': i['compra'],
+                'venta': i['venta'],
+                'nombre': i['nombre'],
+                'moneda': i['moneda'],
+                'fechaActualizacion': fecha_formateada              
+            })
+        email_body = "\n\nCOTIZACIONES EXTRA\n\n"
+        for item in info_moneda:
+            email_body += f"{item['moneda']}\n"
+            email_body += f"{item['nombre']}\n"
+            email_body += f"Compra: {item['compra']}\n"
+            email_body += f"Venta: {item['venta']}\n"
+            email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
+            email_body += "-" * 30 + "\n"  # Separador entre cada casa de cambio
+        
+        return email_body
+    else:
+        return jsonify({'error': 'No es posible cargar la info'}), response.status_code
 
-# Ruta para procesar solicitudes
+body_content_dolares = print_info_dolares()
+body_content_general = print_info_general()
+body_content = body_content_dolares + body_content_general # contenido final para el mail
+print(body_content)
+
+# envio mail
 @app.route('/procesar', methods=['POST'])
 def procesar():
-    nombre = request.form.get('nombre')
-    correo = request.form.get('correo')
-    asunto = request.form.get('consulta')
+    print(request.json)
+    data = request.get_json()
+    nombre = data.get('nombre')
+    correo = data.get('correo')
+    if nombre and correo:
+        print(f"Nombre: {nombre}")
+        print(f"Correo: {correo}")
+        data = {
+        'service_id': 'infodolar',
+         'template_id': 'cotizaciones',
+         'user_id': 'xLpu-WbDZiqP-AuSj',
+         'accessToken': 'esPrth6Ahmt2NpKLUPo8O',
+         'template_params': {
+             'user_email': correo,
+             'from_name': 'InfoDolar',
+             'user_name': nombre,
+             'message': body_content
+         }
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Origin': 'http://127.0.0.1:5000/',  
+            'Referer': 'http://127.0.0.1:5000/'
+        }
+
+        try:
+            response = requests.post(
+                'https://api.emailjs.com/api/v1.0/email/send',
+                data=json.dumps(data),
+                headers=headers
+            )
+            response.raise_for_status()
+            print('La cotización fue enviada correctamente!')
+        except requests.exceptions.RequestException as error:
+            print(f'Oops... {error}')
+            if error.response is not None:
+                print(error.response.text)
     
-    if not nombre or not correo:
-        return jsonify({'error': "Completá bien los datos"}), 400
-    
-    if asunto == 'dolar':
-        body_content = "Contenido relacionado con el dólar"  # Define esta lógica
+        return jsonify({'message': f'Mensaje enviado correctamente a {correo}'}), 200   
     else:
-        consulta_response = consulta()
-        body_content = consulta_response.get_json()
-
-    try:
-        enviar_correo(nombre, correo, body_content)
-        return f'Mensaje enviado correctamente a {correo}', 200
-    except requests.exceptions.RequestException as error:
-        return jsonify({'error': f'No se pudo enviar el correo: {error}'}), 500
-
-    
+        return jsonify({'error': "Datos incorrectos, verifique por favor"}), 405
     
     
     

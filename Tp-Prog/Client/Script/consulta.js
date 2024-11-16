@@ -8,25 +8,33 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(nombre)
         const email = document.getElementById("correo").value;
         console.log(email)
-        const consulta = document.getElementById("consulta").value;
-        console.log(consulta)
-        await getConsulta(nombre, email, consulta); // Llama a la función para manejar el envío
+        await getConsulta(nombre, email); // Llama a la función para manejar el envío
     });
 });
 
-const getConsulta = async (nombre, email, consulta) => {
+const getConsulta = async (nombre, email) => {
+    if (!nombre || !email) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+        alert("Por favor, ingresa un correo electrónico válido.");
+        return;
+    }
+
     try {
-        const queryParams = new URLSearchParams({ nombre, email, consulta }).toString();
-        const response = await fetch(`http://127.0.0.1:5000/consulta?${queryParams}`, {
-            method: "GET",
+        const response = await fetch("http://127.0.0.1:5000/procesar", {
+            method: "POST",
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ nombre, correo: email }), // Envío de datos al servidor
         });
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            console.log("Respuesta del servidor:", data);
             alert("Consulta procesada exitosamente.");
             window.location.href = "postMensaje.html"; // Redirige después del éxito
         } else {
@@ -36,7 +44,7 @@ const getConsulta = async (nombre, email, consulta) => {
         }
     } catch (error) {
         console.error("Error al realizar la consulta:", error);
-        alert("Error al realizar la consulta.");
+        alert("Error al realizar la consulta. Verifica tu conexión.");
     }
 };
 
