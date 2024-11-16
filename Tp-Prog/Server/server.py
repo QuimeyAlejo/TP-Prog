@@ -7,7 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__) 
 CORS(app) 
 
-# trae las cotizaciones generales
+# Get cotizaciones generales
 @app.route('/', methods=['GET'])
 def get_info_cotizaciones(): 
     url = "https://dolarapi.com/v1/cotizaciones"
@@ -37,7 +37,7 @@ def get_info_cotizaciones():
     else:
             return jsonify({'error': 'No se pudieron obtener las cotizaciones'}), 500
 
-# trae las cotizaciones del dolar
+# Get cotizaciones dolar
 @app.route('/dolares', methods=['GET'])
 def get_info_dolares(): 
     url = "https://dolarapi.com/v1/dolares"
@@ -69,7 +69,7 @@ def get_info_dolares():
 
 
 
-# prepara la info de dolares para mandar por mail    
+# Get cotizaciones dolar y estructura del mail
 @app.route('/emailDolares', methods=['GET'])
 def print_info_dolares(): 
     url = "https://dolarapi.com/v1/dolares"
@@ -108,7 +108,7 @@ def print_info_dolares():
     else:
         return jsonify({'error': 'No es posible cargar la info'}), response.status_code
 
-# prepara la info de cotizaciones generales para mandar por mail 
+# Get cotizaciones generales y estructura del mail
 @app.route('/emailCotizaciones', methods=['GET'])
 def print_info_general(): 
     url = "https://dolarapi.com/v1/cotizaciones"
@@ -119,6 +119,8 @@ def print_info_general():
         info_moneda = []
         
         for i in data:
+            if i.get('moneda') == 'USD':
+                continue
             fecha_actualizacion = i.get('fechaActualizacion')
             if fecha_actualizacion:
                 fecha_dt = datetime.strptime(fecha_actualizacion, "%Y-%m-%dT%H:%M:%S.%fZ")
@@ -199,8 +201,6 @@ def procesar():
     else:
         return jsonify({'error': "Datos incorrectos, verifique por favor"}), 405
     
-    
-    
-    
+       
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
