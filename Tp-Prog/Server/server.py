@@ -12,7 +12,7 @@ CORS(app)
 def get_info_cotizaciones(): 
     url = "https://dolarapi.com/v1/cotizaciones"
     response = requests.get(url)   
-    print(response.json(), "Datos recibidos de la API")  
+ #   print(response.json(), "Datos recibidos de la API")  
     if response.status_code == 200: # OK 
         data = response.json()
         info_moneda = []
@@ -42,7 +42,7 @@ def get_info_cotizaciones():
 def get_info_dolares(): 
     url = "https://dolarapi.com/v1/dolares"
     response = requests.get(url)   
-    print(response.json(), "Datos recibidos de la API")  
+  #  print(response.json(), "Datos recibidos de la API")  
     if response.status_code == 200: # OK 
         data = response.json()
         info_moneda = []
@@ -74,7 +74,7 @@ def get_info_dolares():
 def print_info_dolares(): 
     url = "https://dolarapi.com/v1/dolares"
     response = requests.get(url)   
-    print(response.json(), "Datos recibidos de la API")  
+   # print(response.json(), "Datos recibidos de la API")  
     if response.status_code == 200: # OK 
         data = response.json()
         info_moneda = []
@@ -113,7 +113,7 @@ def print_info_dolares():
 def print_info_general(): 
     url = "https://dolarapi.com/v1/cotizaciones"
     response = requests.get(url)   
-    print(response.json(), "Datos recibidos de la API")  
+   # print(response.json(), "Datos recibidos de la API")  
     if response.status_code == 200: # OK 
         data = response.json()
         info_moneda = []
@@ -156,13 +156,13 @@ print(body_content)
 # envio mail
 @app.route('/procesar', methods=['POST'])
 def procesar():
-    print(request.json)
+    #print(request.json)
     data = request.get_json()
     nombre = data.get('nombre')
     correo = data.get('correo')
     if nombre and correo:
-        print(f"Nombre: {nombre}")
-        print(f"Correo: {correo}")
+    #    print(f"Nombre: {nombre}")
+     #   print(f"Correo: {correo}")
         data = {
         'service_id': 'infodolar',
          'template_id': 'cotizaciones',
