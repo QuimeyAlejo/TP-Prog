@@ -36,18 +36,18 @@ const crearCartaCotizacion = (cotizacion) => {
 const peticionesDolares = async () => {
     try {
         // const response = await fetch("https://dolarapi.com/v1/dolares"); // aca mas que nada sirve para pedir directamente a la api, en caso de server local descometnar la linea 39
-        const response = await fetch("http://127.0.0.1:5000/dolar"); 
+        const response = await fetch("http://127.0.0.1:5000/dolares"); 
         //esta linea 39 sirve solo si esta levantado el py
 
         const data2 = await response.json();
         console.log('USD',data2)
         const cotizaciones = data2.map(moneda => ({
-            nombre: moneda.tipo,
+            nombre: moneda.nombre,
             venta: moneda.venta,
             compra: moneda.compra
         }));
   
-        console.log("cotizacion de la moneda ", cotizaciones);
+      // console.log("cotizacion de la moneda ", cotizaciones);
         actualizarCotizaciones(cotizaciones); 
     } catch (error) {
         console.log("Error al obtener los datos de la API", error);

@@ -154,6 +154,26 @@ h1{
     grid-template-columns: repeat(4, auto); 
     gap: 10px;
 }
+.botonpost{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+}
+.botonpost::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: calc(-100% - 80px);
+    border-bottom: 80px solid #286cff;
+    border-right: 80px solid transparent;
+    transition: .4s ease-in-out all;
+}
+.botonpost:hover::after {
+    left: 0;
+}
 
 button {
     height: 50px;
@@ -189,22 +209,12 @@ button span {
     border-right: 80px solid transparent;
     transition: .4s ease-in-out all;
 }
-.consultar::after {
-    content: "";
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: calc(-100% - 80px);
-    border-bottom: 80px solid #286cff;
-    border-right: 80px solid transparent;
-    transition: .4s ease-in-out all;
-}
-.consultar:hover::after {
-    left: 0;
-}
+
 .boton:hover::after {
     left: 0;
+}
+.botonIndicado {
+    background-color: #286cff;
 }
 .li-text{
     text-decoration : none;
@@ -215,7 +225,10 @@ button span {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     max-width: 400px;
     margin: 0 auto;
 }
@@ -331,7 +344,12 @@ textarea{
     height: auto; 
     width: 200px;
 }
-
+.divpost{
+    display: flex;                /* Activar Flexbox */
+    justify-content: center;      /* Centrar horizontalmente */
+    align-items: center;          /* Centrar verticalmente */
+    height: 100%; 
+}
 
 @media (max-width: 600px) {
     .msgenv {

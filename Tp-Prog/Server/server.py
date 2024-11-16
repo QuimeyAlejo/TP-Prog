@@ -1,142 +1,206 @@
-from flask import Flask, jsonify, request, render_template
-from flask_cors import CORS
+from flask import Flask, jsonify, request, json
 import requests
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from clases2 import Tipo, Cotizacion, Moneda,crear_instancias_dolar_desde_api,crear_instancias_cotizaciones_desde_api
+from clases import Tipo, Cotizacion
+from datetime import datetime
+from flask_cors import CORS
 
-app = Flask(__name__, template_folder="../Client/templates")  # Esta línea sirve para crear una app de Flask e indicar __name__ a Flask donde se encuentra el archivo principal de nuestro server
-CORS(app)  # CORS nos permite que nuestra app o rutas de Flask puedan realizar solicitudes y recibirlas
+app = Flask(__name__) 
+CORS(app) 
 
-# RUTAS
-@app.route('/dolar', methods=['GET'])
-def obtener_dolar():
-    monedas = crear_instancias_dolar_desde_api()
-    resultado = []
-    for nombre_moneda, moneda in monedas.items():
-        for tipo in moneda.tipo_casas:
-            for cotizacion in tipo.mostrar_cotizaciones():
-                resultado.append({
-                    "moneda": moneda.mostrar_nombre(),
-                    "tipo": tipo.mostrar_nombre_tipo(),
-                    "compra": cotizacion.mostrar_compra(),
-                    "venta": cotizacion.mostrar_venta(),
-                    "fecha_actualizacion": cotizacion.mostrar_actualizacion().isoformat()
-                })
-    
-    return jsonify(resultado)
-
-
+# Get cotizaciones generales
 @app.route('/', methods=['GET'])
-def obtener_cotizaciones():
-    monedas = crear_instancias_cotizaciones_desde_api()
-    resultado = []
-    for nombre_moneda, moneda in monedas.items():
-        for tipo in moneda.tipo_casas:
-            for cotizacion in tipo.mostrar_cotizaciones():
-                resultado.append({
-                    "moneda": moneda.mostrar_nombre(),
-                    "tipo": tipo.mostrar_nombre_tipo(),
-                    "compra": cotizacion.mostrar_compra(),
-                    "venta": cotizacion.mostrar_venta(),
-                    "fecha_actualizacion": cotizacion.mostrar_actualizacion().isoformat()
-                })
-    
-    return jsonify(resultado)
-
-# Historico
-@app.route('/historico', methods=['GET'])
-def get_historico_data():  
-    api_url = "https://api.argentinadatos.com/v1/cotizaciones/dolares/"  
-    response = requests.get(api_url)   
-    print("GET HISTORICO")  # Esta línea imprime para depurar
-    if response.status_code == 200:  # El código 200 es cuando todo está OK
+def get_info_cotizaciones(): 
+    url = "https://dolarapi.com/v1/cotizaciones"
+    response = requests.get(url)   
+    print(response.json(), "Datos recibidos de la API")  
+    if response.status_code == 200: # OK 
         data = response.json()
         info_moneda = []
+        
+        for item in data:
+                monedas = Cotizacion(
+                    nombre_moneda=item.get('moneda'),
+                    nombre=item.get('nombre'),
+                    compra=item.get('compra'),
+                    venta=item.get('venta'),
+                    fecha=item.get('fechaActualizacion')
+                )
+
+                info_moneda.append({
+                    'moneda': monedas.mostrar_moneda(),
+                    'nombre': monedas.mostrar_nombre(),
+                    'compra': monedas.mostrar_compra(),
+                    'venta': monedas.mostrar_venta(),
+                    'fecha': monedas.mostrar_fecha()
+                })
+        return jsonify(info_moneda), 200
+    else:
+            return jsonify({'error': 'No se pudieron obtener las cotizaciones'}), 500
+
+# Get cotizaciones dolar
+@app.route('/dolares', methods=['GET'])
+def get_info_dolares(): 
+    url = "https://dolarapi.com/v1/dolares"
+    response = requests.get(url)   
+    print(response.json(), "Datos recibidos de la API")  
+    if response.status_code == 200: # OK 
+        data = response.json()
+        info_moneda = []
+        
+        for item in data:
+                monedas = Cotizacion(
+                    nombre_moneda=item.get('moneda'),
+                    nombre=item.get('nombre'),
+                    compra=item.get('compra'),
+                    venta=item.get('venta'),
+                    fecha=item.get('fechaActualizacion')
+                )
+
+                info_moneda.append({
+                    'moneda': monedas.mostrar_moneda(),
+                    'nombre': monedas.mostrar_nombre(),
+                    'compra': monedas.mostrar_compra(),
+                    'venta': monedas.mostrar_venta(),
+                    'fecha': monedas.mostrar_fecha()
+                })
+        return jsonify(info_moneda), 200
+    else:
+            return jsonify({'error': 'No se pudieron obtener las cotizaciones'}), 500
+
+
+
+# Get cotizaciones dolar y estructura del mail
+@app.route('/emailDolares', methods=['GET'])
+def print_info_dolares(): 
+    url = "https://dolarapi.com/v1/dolares"
+    response = requests.get(url)   
+    print(response.json(), "Datos recibidos de la API")  
+    if response.status_code == 200: # OK 
+        data = response.json()
+        info_moneda = []
+        
         for i in data:
+            fecha_actualizacion = i.get('fechaActualizacion')
+            if fecha_actualizacion:
+                fecha_dt = datetime.strptime(fecha_actualizacion, "%Y-%m-%dT%H:%M:%S.%fZ")
+                fecha_formateada = fecha_dt.strftime('%d-%m-%Y %H:%M') # formato fecha
+            else:
+                fecha_formateada = "Fecha no disponible"
+
             info_moneda.append({
                 'casa': i['casa'],
                 'compra': i['compra'],
                 'venta': i['venta'],
-                'fecha': i['fecha']
+                'nombre': i['nombre'],
+                'moneda': i['moneda'],
+                'fechaActualizacion': fecha_formateada               
             })
-        return jsonify(info_moneda)
-    else:
-        return jsonify({'error': 'Paren la rotativa, hay un error...'}), response.status_code
-
-
-def enviar_correo(destinatario, asunto, cuerpo_html):
-    remitente = "tpintegrador58@gmail.com"  
-    contraseña = "mlam rbgr yhlb rczi"  
-    msg = MIMEMultipart()
-    msg['From'] = remitente
-    msg['To'] = destinatario
-    msg['Subject'] = asunto
-    msg.attach(MIMEText(cuerpo_html, 'html'))
-
-    try:
-        servidor = smtplib.SMTP('smtp.gmail.com', 587)
-        servidor.starttls()
-        servidor.login(remitente, contraseña)
-        servidor.sendmail(remitente, destinatario, msg.as_string())
-        servidor.quit()
-        print("Correo enviado con éxito pa")  
-    except Exception as e:
-        print(f"Error al enviar el correo: {e}")
-
-
-@app.route('/consulta', methods=["GET", "POST"])
-def procesar_consulta():
-    if request.method == "GET":
-        return render_template("contacto.html")
-
-    email = request.json.get("email")
-    consulta = request.json.get("consulta")
-    nombre = request.json.get("nombre")
-
-    if not email or not consulta or not nombre:
-        return jsonify({"error": "Todos los campos son obligatorios"}), 400
-
-    # antes haciamos  si el valor era dolar apunte a la api dolar si no era cotizacion, ahora
-    # lo que hacemos es invocar al metodo correspondiende te las clases
-    consultas_disponibles = {
-        "dolar": crear_instancias_dolar_desde_api,
-        "cotizaciones": crear_instancias_cotizaciones_desde_api
-    }
-
-    if consulta not in consultas_disponibles:
-        return jsonify({"error": "Consulta no válida"}), 400
-
-    try:
-       
-        monedas = consultas_disponibles[consulta]()
+        email_body = "COTIZACIONES DOLARES\n\n"
+        for item in info_moneda:
+            email_body += f"{item['moneda']}\n"
+            email_body += f"{item['nombre']}\n"
+            email_body += f"Compra: {item['compra']}\n"
+            email_body += f"Venta: {item['venta']}\n"
+            email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
+            email_body += "*" * 30 + "\n"  # Separador entre cada casa de cambio
         
-        cuerpo_html = f"<h1>Resultados de la consulta: {consulta}</h1><ul>"
+        return email_body
+    else:
+        return jsonify({'error': 'No es posible cargar la info'}), response.status_code
 
-        # Recorriendo las monedas, tipos y cotizaciones
-        for moneda in monedas.values():
-            for tipo in moneda.tipo_casas:
-                for cotizacion in tipo.mostrar_cotizaciones():
-                    # armamos el cuerpo html para ser enviado por correo
-                    cuerpo_html += f"""
-                    <li>
-                        <strong>Moneda:</strong> {moneda.mostrar_nombre()}<br>
-                        <strong>Tipo:</strong> {tipo.mostrar_nombre_tipo()}<br>
-                        <strong>Compra:</strong> {cotizacion.mostrar_compra()}<br>
-                        <strong>Venta:</strong> {cotizacion.mostrar_venta()}<br>
-                        <strong>Fecha de Actualización:</strong> {cotizacion.mostrar_actualizacion().isoformat()}<br>
-                    </li>
-                    """
-        cuerpo_html += "</ul>"
+# Get cotizaciones generales y estructura del mail
+@app.route('/emailCotizaciones', methods=['GET'])
+def print_info_general(): 
+    url = "https://dolarapi.com/v1/cotizaciones"
+    response = requests.get(url)   
+    print(response.json(), "Datos recibidos de la API")  
+    if response.status_code == 200: # OK 
+        data = response.json()
+        info_moneda = []
+        
+        for i in data:
+            if i.get('moneda') == 'USD':
+                continue
+            fecha_actualizacion = i.get('fechaActualizacion')
+            if fecha_actualizacion:
+                fecha_dt = datetime.strptime(fecha_actualizacion, "%Y-%m-%dT%H:%M:%S.%fZ")
+                fecha_formateada = fecha_dt.strftime('%d-%m-%Y %H:%M')
+            else:
+                fecha_formateada = "Fecha no disponible"
+            info_moneda.append({
+                'casa': i['casa'],
+                'compra': i['compra'],
+                'venta': i['venta'],
+                'nombre': i['nombre'],
+                'moneda': i['moneda'],
+                'fechaActualizacion': fecha_formateada              
+            })
+        email_body = "\n\nCOTIZACIONES EXTRA\n\n"
+        for item in info_moneda:
+            email_body += f"{item['moneda']}\n"
+            email_body += f"{item['nombre']}\n"
+            email_body += f"Compra: {item['compra']}\n"
+            email_body += f"Venta: {item['venta']}\n"
+            email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
+            email_body += "*" * 30 + "\n"  # Separador entre cada casa de cambio
+        
+        return email_body
+    else:
+        return jsonify({'error': 'No es posible cargar la info'}), response.status_code
 
-        # Enviar el correo con los resultados
-        enviar_correo(email, f"Hola {nombre}. Resultados de {consulta}", cuerpo_html)
-        return jsonify({"message": "Consulta procesada exitosamente"}), 200
+body_content_dolares = print_info_dolares()
+body_content_general = print_info_general()
+body_content = body_content_dolares + body_content_general # contenido final para el mail
+print(body_content)
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+# envio mail
+@app.route('/procesar', methods=['POST'])
+def procesar():
+    print(request.json)
+    data = request.get_json()
+    nombre = data.get('nombre')
+    correo = data.get('correo')
+    if nombre and correo:
+        print(f"Nombre: {nombre}")
+        print(f"Correo: {correo}")
+        data = {
+        'service_id': 'infodolar',
+         'template_id': 'cotizaciones',
+         'user_id': 'xLpu-WbDZiqP-AuSj',
+         'accessToken': 'esPrth6Ahmt2NpKLUPo8O',
+         'template_params': {
+             'user_email': correo,
+             'from_name': 'InfoDolar',
+             'user_name': nombre,
+             'message': body_content
+         }
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Origin': 'http://127.0.0.1:5000/',  
+            'Referer': 'http://127.0.0.1:5000/'
+        }
 
-
+        try:
+            response = requests.post(
+                'https://api.emailjs.com/api/v1.0/email/send',
+                data=json.dumps(data),
+                headers=headers
+            )
+            response.raise_for_status()
+            print('La cotización fue enviada correctamente!')
+        except requests.exceptions.RequestException as error:
+            print(f'Oops... {error}')
+            if error.response is not None:
+                print(error.response.text)
+    
+        return jsonify({'message': f'Mensaje enviado correctamente a {correo}'}), 200   
+    else:
+        return jsonify({'error': "Datos incorrectos, verifique por favor"}), 405
+    
+       
 if __name__ == '__main__':
-    app.run(debug=True)  # Ejecuta la aplicación en modo debug
+    app.run(debug=True, port=5000)
