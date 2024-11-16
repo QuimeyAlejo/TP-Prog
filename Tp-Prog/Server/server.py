@@ -102,7 +102,7 @@ def print_info_dolares():
             email_body += f"Compra: {item['compra']}\n"
             email_body += f"Venta: {item['venta']}\n"
             email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
-            email_body += "-" * 30 + "\n"  # Separador entre cada casa de cambio
+            email_body += "*" * 30 + "\n"  # Separador entre cada casa de cambio
         
         return email_body
     else:
@@ -140,7 +140,7 @@ def print_info_general():
             email_body += f"Compra: {item['compra']}\n"
             email_body += f"Venta: {item['venta']}\n"
             email_body += f"Fecha de Actualización: {item['fechaActualizacion']}\n"
-            email_body += "-" * 30 + "\n"  # Separador entre cada casa de cambio
+            email_body += "*" * 30 + "\n"  # Separador entre cada casa de cambio
         
         return email_body
     else:
