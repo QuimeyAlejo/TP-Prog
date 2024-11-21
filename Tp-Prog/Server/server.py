@@ -5,7 +5,10 @@ from datetime import datetime
 from flask_cors import CORS
 import os 
 app = Flask(__name__) 
-CORS(app, origins=["https://tp-prog-c73rixcex-quimeyalejos-projects.vercel.app"]) 
+#CORS(app, origins=["https://tp-prog-c73rixcex-quimeyalejos-projects.vercel.app"]) 
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
+
 
 # Get cotizaciones generales
 @app.route('/', methods=['GET'])

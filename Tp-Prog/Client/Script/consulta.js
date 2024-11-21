@@ -24,7 +24,9 @@ const getConsulta = async (nombre, email) => {
     }
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/procesar", {
+        
+        //const response = await fetch("http://127.0.0.1:5000/procesar", {
+        const response = await fetch("https://tp-prog.onrender.com/procesar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
