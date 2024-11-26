@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="gif.css">
+    <link rel="stylesheet" href="../Client/CSS/styles.css">
+    <link rel="stylesheet" href="../Client/CSS/gif.css">
     <title>DolarApi</title>
     
 </head>
@@ -14,17 +14,26 @@
         <div class="contenedor">
             <div class="contenedor-botones">
                 <button class="boton" onclick="window.location.href='index.html'"><span>Inicio</span></button>
-                <button class="botonIndicado" onclick="window.location.href='dolar.html'"><span">Dolar</span></button> 
+                <button class="boton" onclick="window.location.href='dolar.html'"><span>Dolar</span></button> 
                 <button class="boton" onclick="window.location.href='historico2.html'"><span>Historico</span></button>
-                <button class="boton" onclick="window.location.href='contacto.html'"><span>Envio Mail</span></button>
+                <button class="botonIndicado" onclick="window.location.href='contacto.html'"><span>Envio Mail</span></button>
             </div>
         </div>
         
     </nav>
+
     <div id="tradingview-widget-container" class="widget-trading"></div>
     <main>
-        <h1>Tipo de cambio DOLAR</h1>
-        <div class="carta-container"></div>
+        <h1>Recibir cotizaciones via E-Mail</h1>
+        <form id="consultaForm" method="post" class="formContacto" >                <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Ingrese nombre...">
+            <label for="email">E-Mail:</label>
+            <input type="email" name="email" id="correo" placeholder="Ingrese e-mail..." required>
+            <label for="asunto">Asunto: Cotizacion</label>
+            </select>
+            
+            <input class="enviar" type="submit" value="Enviar">
+        </form>
     </main>
     <div>
         
@@ -33,7 +42,7 @@
             </span>
             
                <div class="info">
-                    <img class="logoutn" src="../Img/utn.png" alt="Logo UTN" height="50px" width="50px">
+                    <img class="logoutn" src="../Client/Img/utn.png" alt="Logo UTN" height="50px" width="50px">
                    <ul>
                        <li class="titulo">Integrantes:</li>
                        <li>Chieu Santiago</li>
@@ -55,12 +64,7 @@
             
 </body>
 
-
-
-<script src="../Script/peticionDolar.js" defer></script>
 <script src="../Script/tradingview.js" defer></script>
-
+<script src="../Script/consulta.js" defer></script>
 
 </html>
-
-
